@@ -15,6 +15,9 @@ class App(tk.Tk): #App eh uma subclasse de Tk
 
         self.button = ttk.Button(self, text = "Click!", command = self.button_clicked)
 
+    def button_clicked():
+        return 0;
+
 
 if __name__ == "__main__":
     app = App()
