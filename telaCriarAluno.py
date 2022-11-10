@@ -5,9 +5,9 @@ import psycopg2 as psc
 
 def conectar():
     conn = psc.connect(host = "200.129.44.249",
-     database = "510613",
-     user = "510613",
-     password = "510613@fbd")
+                       database = "510613",
+                       user = "510613",
+                       password = "510613@fbd")
     return conn
 
 def inserir():
