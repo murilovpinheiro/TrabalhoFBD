@@ -17,18 +17,12 @@ def consultar():
     conn.close()
     return resultado
 
-root = Tk()
-root.title("Primeira Janela Criada")
-root.geometry("800x600")
-root.resizable(False, False)
-
-frame = Frame()
-frame.pack(padx = 10, pady = 10, fill = "x", expand = True, anchor = "n")
-result = consultar()
-
-for i in range(len(result)):
-    for j in range(6):
-        e = Label(frame,font=('Helvetica',12), background = "#e6e6ff" , width = 10,text = str(result[i][j]), borderwidth = 1, relief = "solid", anchor = "e")
-        e.grid(row = i, column = j)
-        print(result[i][j])
-root.mainloop()
+def criarFrame():
+    frame = Frame()
+    result = consultar()
+    for i in range(len(result)):
+        for j in range(6):
+            e = Label(frame,font=('Helvetica',12), background = "#e6e6ff" , width = 10,text = str(result[i][j]), borderwidth = 1, relief = "solid", anchor = "e")
+            e.grid(row = i, column = j)
+            print(result[i][j])
+    return frame
