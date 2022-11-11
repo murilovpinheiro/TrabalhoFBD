@@ -8,8 +8,19 @@ def conectar():
      password = "510613@fbd")
     return conn
 
-conn = conectar()
-cur = conn.cursor()
+def getQuery(com = "select * from aluno"):
+    conn = conectar()
+    cur = conn.cursor()
+    cur.execute(com)
+    resultado = cur.fetchall()
+    cur.close()
+    conn.close()
+    return resultado
+
+
+# conn = conectar()
+# cur = conn.cursor()
+
 # try:
 #     cur.execute("INSERT INTO aluno(nome, sexo, data_nasc, endereco) values (%s, %s, %s, %s);", ("Papai Noel", "F", "2004-2-2", "ab"))
 #     conn.commit()
@@ -20,8 +31,11 @@ cur = conn.cursor()
 #     #Erros comuns vão ser computados apenas como erros ao inicio, se sobrar tempo eu faço tratamento melhor
 # except Exception as e:
 #     print(e)
-cur.execute("select * from aluno")
-resultado = cur.fetchall()
-print(resultado)
-cur.close()
-conn.close()
+
+# cur.execute("select * from aluno")
+# resultado = cur.fetchall()
+# print(resultado)
+# cur.close()
+# conn.close()
+
+# print(getQuery())
