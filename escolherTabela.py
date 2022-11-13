@@ -9,6 +9,8 @@ tabelas = getQuery('''
                    AND table_type='BASE TABLE';
                    ''')
 
+print(len(tabelas))
+
 root = Tk()
 root.geometry("600x450")
 
@@ -16,6 +18,6 @@ botoes = []
 
 for t in tabelas:
     botoes.append(Button(root, text= t[0]))
-    botoes[len(botoes)-1].pack(side= 'top')
+    botoes[len(botoes)-1].pack(side= 'left')
 
 root.mainloop()
