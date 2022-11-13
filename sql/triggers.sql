@@ -86,7 +86,7 @@ BEGIN
     IF (NEW.horaini >= NEW.horafim) THEN RAISE EXCEPTION 'Horario final é antes do horario final';
     END IF;
     SELECT lotacao FROM local WHERE (codigo = NEW.local_id) INTO numero_lotacao;
-    IF (NEW.vagas > numero) THEN RAISE EXCEPTION 'O numero de vagas não pode exceder a lotação';
+    IF (NEW.vagas > numero_lotacao) THEN RAISE EXCEPTION 'O numero de vagas não pode exceder a lotação';
     END IF;
     RETURN NEW;
 END;
