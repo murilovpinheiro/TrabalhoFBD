@@ -2,7 +2,7 @@ OK Trigger capaz de adicionar uma unidade na quantidade de
 alunos matriculados da disciplina, cada vez que um aluno for adicionado a turma e de forma análoga
 quando o mesmo for removido desta. 
 
-O número de vagas e a quantidade de alunos matriculados.(A quantidade de alunos
+OK O número de vagas e a quantidade de alunos matriculados.(A quantidade de alunos
 matriculados não deve exceder o número de vagas)
 
 Toda sala de aula, biblioteca e/ou auditório devem pertencer a um bloco. Se o local for um
