@@ -1,6 +1,6 @@
-Trigger capaz de adicionar uma unidade na quantidade de
+OK Trigger capaz de adicionar uma unidade na quantidade de
 alunos matriculados da disciplina, cada vez que um aluno for adicionado a turma e de forma análoga
-quando o mesmo for removido desta.
+quando o mesmo for removido desta. 
 
 O número de vagas e a quantidade de alunos matriculados.(A quantidade de alunos
 matriculados não deve exceder o número de vagas)
