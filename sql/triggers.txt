@@ -5,7 +5,13 @@ quando o mesmo for removido desta.
 OK O número de vagas e a quantidade de alunos matriculados.(A quantidade de alunos
 matriculados não deve exceder o número de vagas)
 
-Toda sala de aula, biblioteca e/ou auditório devem pertencer a um bloco. Se o local for um
+OK Toda sala de aula, biblioteca e/ou auditório devem pertencer a um bloco. Se o local for um
 bloco, este campo deve ser nulo.
 
-trigger pra checar se a turma X tem realmente uma disciplina Y
+NUMERO vagas < LOTACAO DO BLOCO
+
+OK trigger pra checar se a turma X tem realmente uma disciplina Y
+
+OK professor nao pode lecionar mais de 4 disciplinas
+
+OK professor ou é diretor de um centro ou coordenador de um curso (ou exclusivo)
