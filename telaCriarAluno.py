@@ -14,11 +14,11 @@ def inserir():
     conn = conectar()
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO aluno(nome, sexo, data_nasc, endereco, email) values (%s, %s, %s, %s, %s);", (nomeS.get(), sexoS.get(), dataS.get(), endS.get(), emailS.get()))
+        cursor.execute("INSERT INTO aluno(nome, sexo, data_nasc, endereco, email) values (nome, sexo, %s, %s, %s);", (dataS.get(), endS.get(), emailS.get()))
         conn.commit()
         showinfo("Aviso: ", "Salvou")
     except Exception as e:
-        showinfo("ERRO","Dados Digitados são Inválidos")
+        showinfo("ERRO",("Dados Digitados são Inválidos: \n %e", e))
         if (str(e).find("invalid input syntax for type integer") )> -1:
             print("Valor Digitado Inválido")
     cursor.close()
