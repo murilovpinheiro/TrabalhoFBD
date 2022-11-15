@@ -1,81 +1,112 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import psycopg2 as psc
+import conectar as cnt
 
-def conectar():
-    conn = psc.connect(host = "200.129.44.249",
-                       database = "510613",
-                       user = "510613",
-                       password = "510613@fbd")
-    return conn
+class Alteracao(ttk.Frame):
+    def __init__(self, labelPrincipal, local, localForm, codigoPesq, tabela, labels, colunas):
+        super().__init__(local)
+        self.labelPrincipal = labelPrincipal
+        self.local = local
+        self.localForm = localForm
+        self.codigoPesq = codigoPesq
+        self.tabela = tabela
+        self.labels = labels
+        self.colunas = colunas
+        self.entrys = {}
+        self.valor = 0
+        self.pack()
 
-def pesquisar(codigo, valor):
-    conn = conectar()
-    cursor = conn.cursor()
-    string = codigo + "'"+ valor +"'"
-    cursor.execute(string)
-    resultado = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    names = ('Nome: ', 'Sexo: ', 'Data de Nascimento: ',
-         'Endereço: ', 'Email: ')
-    createForm(names, frame, {}, resultado)
-
-
-def createSearch(nome, codigo, local):
-    lb = ttk.Label(local, text = nome)
-    e = ttk.Entry(local)
-    lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
-    e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
-    button = ttk.Button(frame, text = "Pesquisar", command = lambda: pesquisar(codigo, e.get()))
-    button.pack( expand = True, pady = 25, anchor = CENTER)
-
-def createForm(names, local, entrys, resultado):
-    i = 1
-    for name in names:
-        lb = ttk.Label(local, text = name)
-        e = ttk.Entry(local)
-        entrys[name] = e
+    
+    def createSearch(self):
+        lb = ttk.Label(self.local, text = self.labelPrincipal)
+        e = ttk.Entry(self.local)
         lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
         e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
-        if resultado[0][i] != None:
-            e.insert(END, resultado[0][i])
-        i+=1
-    button = ttk.Button(frame, text = "Pesquisar", command = inserir)
-    button.pack( expand = True, pady = 25, anchor = CENTER)
-
-def inserir():
-    string = ''
-    for i in range(len(names)):
-        string = string + "'" + entrys[names[i]].get() + "'"
-        if i == len(names) - 1:
-            break
-        string = string + ","
-    string = "INSERT INTO aluno(nome, sexo, data_nasc, endereco, email) values (" + string + ");"
-    conn = conectar()
-    cursor = conn.cursor()
-    try:
-        cursor.execute(string)
-        conn.commit()
-        showinfo("Aviso: ", "Salvou")
-    except Exception as e:
-        showinfo("ERRO",("Dados Digitados são Inválidos: \n %e", e))
-        if (str(e).find("invalid input syntax for type integer") )> -1:
-            print("Valor Digitado Inválido")
-    cursor.close()
-    conn.close()
-
-root = Tk()
-root.title("Tela Dinamica")
-root.geometry("600x450")
-root.resizable(False, False)
+        button = ttk.Button(self.local, text = "Pesquisar", command = lambda: self.pesquisar(e))
+        button.pack(expand = True, pady = 25, anchor = CENTER)
 
 
+    def pesquisar(self, e):
+        self.valor = e.get()
+        if self.valor != "":
+            conn = cnt.conectar()
+            cursor = conn.cursor()
+            string = self.codigoPesq + "'"+ self.valor +"'"
+            print(string)
+            cursor.execute(string)
+            resultado = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            if resultado == []:
+                showinfo("ERRO","Valor Não Encontrado\n")
+                for widget in self.localForm.winfo_children():
+                    widget.destroy()
+            else:
+                self.createForm({}, resultado)
+        else:
+            showinfo("ERRO","Digite um Valor\n")
+            for widget in self.localForm.winfo_children():
+                widget.destroy()
+            
 
-frame = ttk.Frame(root)
-frame.pack(padx = 10, pady = 0, fill = "x", expand = True)
-nome = "Pesquise um aluno pela Matrícula: "
-createSearch(nome, "select * from aluno where matricula = ", frame)
 
-root.mainloop()
+    def createForm(self, entrys, resultado):
+        for widget in self.localForm.winfo_children():
+                widget.destroy()
+        i = 0
+        for label in self.labels:
+            lb = ttk.Label(self.localForm, text = label)
+            e = ttk.Entry(self.localForm)
+            self.entrys[label] = e
+            lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
+            e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
+            if resultado[0][i] != None:
+                e.insert(END, resultado[0][i])
+            i+=1
+        button = ttk.Button(self.localForm, text = "Pesquisar", command = self.atualizar)
+        button.pack( expand = True, pady = 25, anchor = CENTER)
+
+    def atualizar(self):
+        string = ''
+        for i in range(len(self.colunas)):
+            string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
+            if i == len(self.colunas) - 1:
+                #pra nao colocar virgula no final
+                string = string + " where " +  self.colunas[0] + " = " + self.entrys[self.labels[0]].get()
+                break
+            string = string + ", "
+        string = "UPDATE " + self.tabela + " SET " + string
+        conn = cnt.conectar()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(string)
+            conn.commit()
+            showinfo("Aviso: ", "Salvou")
+        except Exception as e:
+            showinfo("ERRO",("Dados Digitados são Inválidos: \n %e", e))
+        cursor.close()
+        conn.close()
+
+# if __name__ == "__main__":
+#     root = Tk()
+#     root.title("Tela Dinamica")
+#     root.geometry("800x600")
+#     root.resizable(False, False)
+
+
+#     framePesq = Frame(root)
+#     framePesq.pack(padx = 10, pady = 0, fill = "x", expand = True)
+#     frameForm = Frame(root)
+#     frameForm.pack(padx = 10, pady = 0, fill = "x", expand = True, anchor = CENTER)
+#     names = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
+#             'Endereço: ', 'Email: ')
+#     colunas = ('matricula', 'nome', 'sexo', 'data_nasc', 'endereco', 'email')
+#     nome = "Pesquise um pela Matrícula: "
+#     classe = Alteracao(nome, framePesq, frameForm, "select * from aluno where matricula = ", "aluno", names, colunas)
+#     classe.createSearch()
+#     root.mainloop()
+##
+        # names = ('Nome: ', 'Sexo: ', 'Data de Nascimento: ',
+        #     'Endereço: ', 'Email: '
+

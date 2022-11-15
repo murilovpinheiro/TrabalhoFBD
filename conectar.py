@@ -18,6 +18,7 @@ def getQuery(com = "select * from aluno"):
     return resultado
 
 
+
 # conn = conectar()
 # cur = conn.cursor()
 
