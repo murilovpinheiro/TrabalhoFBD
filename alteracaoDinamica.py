@@ -4,7 +4,7 @@ from tkinter.messagebox import showinfo
 import conectar as cnt
 
 class Alteracao(ttk.Frame):
-    def __init__(self, labelPrincipal, local, localForm, codigoPesq, tabela, labels, colunas):
+    def __init__(self, labelPrincipal, local, localForm, codigoPesq, tabela, labels, colunas, tipos):
         super().__init__(local)
         self.labelPrincipal = labelPrincipal
         self.local = local
@@ -14,6 +14,7 @@ class Alteracao(ttk.Frame):
         self.labels = labels
         self.colunas = colunas
         self.entrys = {}
+        self.tipos = tipos
         self.valor = 0
         self.pack()
 
@@ -32,7 +33,7 @@ class Alteracao(ttk.Frame):
         if self.valor != "":
             conn = cnt.conectar()
             cursor = conn.cursor()
-            string = self.codigoPesq + "'"+ self.valor +"'"
+            string = self.codigoPesq + self.valor
             print(string)
             cursor.execute(string)
             resultado = cursor.fetchall()
@@ -70,7 +71,12 @@ class Alteracao(ttk.Frame):
     def atualizar(self):
         string = ''
         for i in range(len(self.colunas)):
-            string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
+            if self.entrys[self.labels[i]].get() == '':
+                string = string + self.colunas[i] + " = " + "NULL"
+            elif self.tipos[i] == 'int':
+                string = string + self.colunas[i] + " = " + self.entrys[self.labels[i]].get()
+            else:
+                string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
             if i == len(self.colunas) - 1:
                 #pra nao colocar virgula no final
                 string = string + " where " +  self.colunas[0] + " = " + self.entrys[self.labels[0]].get()
