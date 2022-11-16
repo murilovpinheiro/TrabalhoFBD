@@ -5,11 +5,12 @@ import conectar as cnt
 import psycopg2 as psc
 
 class Insercao(ttk.Frame):
-    def __init__(self, labels, entrys, local, comando):
+    def __init__(self, labels, entrys, local, comando, tipos):
         super().__init__(local)
         self.labels = labels
         self.entrys = entrys
         self.comando = comando
+        self.tipos = tipos
         self.pack()
 
     def createForm(self):
@@ -26,7 +27,12 @@ class Insercao(ttk.Frame):
     def inserir(self):
         string = ''
         for i in range(len(self.entrys)):
-            string = string + "'" +self.entrys[self.labels[i]].get()+ "'"
+            if (self.entrys[self.labels[i]].get()) == '':
+                string = string + 'NULL'
+            elif self.tipos[i] == 'int':
+                string = string +self.entrys[self.labels[i]].get()
+            else:
+                string = string + "'" +self.entrys[self.labels[i]].get()+ "'"
             if i == len(self.labels) - 1:
                 break
             string = string + ","
