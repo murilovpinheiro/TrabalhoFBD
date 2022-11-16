@@ -44,7 +44,7 @@ class Alteracao(ttk.Frame):
                 for widget in self.localForm.winfo_children():
                     widget.destroy()
             else:
-                self.createForm({}, resultado)
+                self.createForm(resultado, e.get())
         else:
             showinfo("ERRO","Digite um Valor\n")
             for widget in self.localForm.winfo_children():
@@ -52,7 +52,7 @@ class Alteracao(ttk.Frame):
             
 
 
-    def createForm(self, entrys, resultado):
+    def createForm(self, resultado, pk):
         for widget in self.localForm.winfo_children():
                 widget.destroy()
         i = 0
@@ -65,12 +65,13 @@ class Alteracao(ttk.Frame):
             if resultado[0][i] != None:
                 e.insert(END, resultado[0][i])
             i+=1
-        button = ttk.Button(self.localForm, text = "Pesquisar", command = self.atualizar)
+        button = ttk.Button(self.localForm, text = "Pesquisar", command = lambda : self.atualizar(pk))
         button.pack( expand = True, pady = 25, anchor = CENTER)
 
-    def atualizar(self):
+    def atualizar(self, pk):
         string = ''
         for i in range(len(self.colunas)):
+            print(self.entrys[self.labels[i]].get(), ' ')
             if self.entrys[self.labels[i]].get() == '':
                 string = string + self.colunas[i] + " = " + "NULL"
             elif self.tipos[i] == 'int':
@@ -79,10 +80,11 @@ class Alteracao(ttk.Frame):
                 string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
             if i == len(self.colunas) - 1:
                 #pra nao colocar virgula no final
-                string = string + " where " +  self.colunas[0] + " = " + self.entrys[self.labels[0]].get()
+                string = string + " where " +  self.colunas[0] + " = " + pk
                 break
             string = string + ", "
         string = "UPDATE " + self.tabela + " SET " + string
+        print(string)
         conn = cnt.conectar()
         cursor = conn.cursor()
         try:

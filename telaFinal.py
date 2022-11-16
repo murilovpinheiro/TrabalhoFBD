@@ -4,18 +4,7 @@ import insercao as ins
 import telaPesquisaAluno as vsz
 import alteracaoDinamica as alt
 import remocao as rmc
-
-
-labelsAluno = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
-               'Endereço: ', 'Email: ')
-colunasViewAluno = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 80))
-colunasAluno = ('matricula', 'nome', 'sexo', 'data_nasc', 'endereco', 'email')
-tiposAluno = ('int', 'str', 'str', 'str', 'int', 'str')
-
-labelsProf = ('ID: ', 'Nome: ', 'Grau de Escolaridade Máxima(G, L, M, D, P): ', 'Sexo: ', 'Data Nascimento: ', 'ID do Curso que Coordena: ', 'ID do Centro que Dirige: ')
-colunasViewProf = (("ID", 50), ("Nome", 80), ("Grau de Escolaridade", 140), ("Sexo",80), ("Data Nascimento", 140), ("Curso Coordenado", 140), ("Centro Dirigido", 100))
-tiposProf = ('int', 'str', 'str', 'str', 'str', 'int', 'int')
-colunasProf = ('id', 'nome', 'grau_max', 'sexo', 'data_nasc', 'coord_curso_id', 'diretor_centro_id')
+import tabelas
 
 class App(Tk): #App eh uma subclasse de Tk
     def __init__(self):
@@ -24,43 +13,53 @@ class App(Tk): #App eh uma subclasse de Tk
         self.title("Tela1")
         self.geometry("1200x800")
 
+        classes = self.inicializarClasses()
+
+        self.createMenu(classes)
+
+        # self.createMenuAluno(menu)
+        # self.createMenuProf(menu)
+        # self.createMenuDisciplina(menu)
+        # self.createMenuCurso(menu)
+        # self.createMenuCursoAluno(menu)
+
+    def inicializarClasses(self):
+        aluno = tabelas.Aluno()
+        prof = tabelas.Professor()
+        disc = tabelas.Disciplina()
+        curso = tabelas.Curso()
+        atd = tabelas.Aluno_turma_disc()
+        classes = ((aluno, "Aluno"),
+                   (prof, "Professor"),
+                   (curso, "Curso"),
+                   (disc, "Disciplina"),
+                   (atd, "Aluno_turma_disc"))
+        return classes
+    
+    def createMenu(self, classes):
         menu = Menu(self)
         self.config(menu = menu)
-        alunobar = Menu(menu)
-        alunobar.add_command(label='Visualizar',
-            command= lambda : self.selecionarVisualizar(framePrincipal,
-             colunasViewAluno, "select * from aluno"))
-        alunobar.add_command(label='Inserir',
-            command= lambda : self.selecionarInsercao(framePrincipal,
-             (labelsAluno, {}, "INSERT INTO aluno(matricula, nome, sexo, data_nasc, endereco, email) values "), tiposAluno))
-        alunobar.add_command(label = 'Atualizar',
-            command= lambda : self.selecionarAlteracao(framePrincipal,
-             ('Pesquise um aluno Pela Matrícula: ',
-             'select * from aluno where matricula = ', 'aluno'), colunasAluno, labelsAluno))
-        alunobar.add_command(label = 'Remover', 
-            command= lambda : self.selecionarRemocao("Digite a Matrícula do Aluno que deseja remover: ", framePrincipal,
-             "Delete from aluno where matricula = "))
-        menu.add_cascade(label="Aluno",
-            menu=alunobar)
+        for classe in classes:
+            self.createMenuBar(menu, classe[0], classe[1])
 
-        profbar = Menu(menu)
-        profbar.add_command(label='Visualizar',
-            command= lambda : self.selecionarVisualizar(framePrincipal,
-            colunasViewProf, "select * from professor"))
-        profbar.add_command(label='Inserir',
-            command= lambda : self.selecionarInsercao(framePrincipal,
-             (labelsProf, {}, "INSERT INTO professor(id, nome, grau_max, sexo, data_nasc, coord_curso_id, diretor_centro_id) values "), tiposProf))
-        profbar.add_command(label = 'Atualizar',
-            command= lambda : self.selecionarAlteracao(framePrincipal,
-             ('Pesquise um Professor Pelo ID: ',
-             'select * from professor where id = ', 'professor'), colunasProf, labelsProf, tiposProf))
-        profbar.add_command(label = 'Remover', 
-            command= lambda : self.selecionarRemocao("Digite ID do Professor que deseja remover: ", framePrincipal,
-             "Delete from professor where id = "))
-        menu.add_cascade(label="Professor",
-        menu=profbar)
-
-        
+    def createMenuBar(self, menu, classe, nome):
+            #aluno = tabelas.Aluno()
+            bar = Menu(menu)
+            bar.add_command(label='Visualizar',
+                    command= lambda : self.selecionarVisualizar(framePrincipal,
+                    classe.colunasView, classe.selectAll))
+            bar.add_command(label='Inserir',
+                    command= lambda : self.selecionarInsercao(framePrincipal,
+                    (classe.labels, {},classe.insert), classe.tipos))
+            bar.add_command(label = 'Atualizar',
+                    command= lambda : self.selecionarAlteracao(framePrincipal,
+                    ('Pesquise na tabela ' +nome+ ' pelo identificador da tabela: ',
+                    classe.select, nome), classe.colunas, classe.labels, classe.tipos))
+            bar.add_command(label = 'Remover', 
+                    command= lambda : self.selecionarRemocao("Digite o identificador da tabela "+ nome + " que deseja remover: ", framePrincipal,
+                    classe.delete))
+            menu.add_cascade(label=nome,
+                    menu=bar)
 
     def selecionarVisualizar(event, antigo, lista, comando):
         for widget in antigo.winfo_children():
@@ -91,7 +90,6 @@ class App(Tk): #App eh uma subclasse de Tk
         classe = rmc.Remocao(label, antigo, codigo)
         classe.createDelete()
         classe.pack()
-
         
 if __name__ == "__main__":
     app = App()
@@ -100,3 +98,4 @@ if __name__ == "__main__":
     label.pack(padx = 10, pady = 0, fill = "x", expand = True)
     framePrincipal.pack()
     app.mainloop()
+
