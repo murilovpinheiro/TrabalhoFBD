@@ -59,6 +59,21 @@ class Aluno_turma_disc():
         self.selectAll = 'select * from aluno_turma_disc'
         self.select = 'select * from aluno_turma_disc where id='
 
+class Turma():
+    def __init__(self):
+        self.labels =  ('ID: ', 'Estado(1 para Aberta, 0 para Fechada): ', 'Quantidade de Alunos: ',
+                             'Vagas: ','Hora Inicial: ', 'Hora Final: ',
+                             'ID da Disciplina: ', 'Ano e Semestre (Formato {AAAA.S}): ', 'ID do Local: ')
+        self.colunasView = (('ID', 60), ('Estado', 80), ('Quantidade de Alunos', 120),
+                             ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80), ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80))
+        self.colunas = ('id', 'estado', 'qnt_alunos', 'vagas',
+                        'horaini','horafim', 'disciplina_id', 'semestre', 'local_id')
+        self.tipos = ('int', 'bool', 'int', 'int', 'int', 'int', 'int', 'sem', 'int')
+
+        self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id ) values'
+        self.delete = 'delete from turma where id = '
+        self.selectAll = 'select * from turma'
+        self.select = 'select * from turma where id = '
 
 
         # self.labels = 

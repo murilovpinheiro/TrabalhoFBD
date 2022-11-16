@@ -29,11 +29,13 @@ class App(Tk): #App eh uma subclasse de Tk
         disc = tabelas.Disciplina()
         curso = tabelas.Curso()
         atd = tabelas.Aluno_turma_disc()
+        turma = tabelas.Turma()
         classes = ((aluno, "Aluno"),
                    (prof, "Professor"),
                    (curso, "Curso"),
                    (disc, "Disciplina"),
-                   (atd, "Aluno_turma_disc"))
+                   (atd, "Aluno_turma_disc"),
+                   (turma, "Turma"))
         return classes
     
     def createMenu(self, classes):

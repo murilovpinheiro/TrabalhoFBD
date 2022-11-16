@@ -76,6 +76,20 @@ class Alteracao(ttk.Frame):
                 string = string + self.colunas[i] + " = " + "NULL"
             elif self.tipos[i] == 'int':
                 string = string + self.colunas[i] + " = " + self.entrys[self.labels[i]].get()
+            elif self.tipos[i] == 'sem':
+                test = True
+                for char in (list(self.entrys[self.labels[i]].get())[1:5]):
+                    print(char, "Caractere da STRING <---")
+                    if not(char.isdigit()):
+                        string = string + "'" + "ERROR" + "'"
+                        test = False
+                        break
+                if (list(self.entrys[self.labels[i]].get())[6] == '1' or list(self.entrys[self.labels[i]].get())[6] == '2') and test:
+                    print(list(self.entrys[self.labels[i]].get())[6], 'PONTO <----')
+                    string = string + self.colunas[i] + " = " +  "'" +self.entrys[self.labels[i]].get()+"'"
+                else:    
+                    print(list(self.entrys[self.labels[i]].get())[6], "TESTE")
+                    string = string + "'" + "ERROR" + "'"
             else:
                 string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
             if i == len(self.colunas) - 1:
