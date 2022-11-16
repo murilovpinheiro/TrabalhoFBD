@@ -11,12 +11,18 @@ WHERE t.id = '1' AND atd.id_disc = t.disciplina_id AND atd.id_turma = t.id AND m
 SELECT * from turma
 WHERE semestre = '{1111.2}'; -- semestre mutavel
 
--- 6. Visualizar as médias de um aluno dada a matrícula. (Similar a um histórico escolar)
+-- 3. Quais locais estão em um dado bloco.
+
+-- 4. Visualizar quais turmas estão alocadas em determinado local, mostrando os nomes da turma 
+-- e da disciplina e os horários de aula.
+
+-- 5. Visualizar as médias de um aluno dada a matrícula. (Similar a um histórico escolar)
 SELECT matr_aluno as matricula, AVG(valor) as media
 FROM notas
 WHERE matr_aluno = '509299' -- matricula mutavel
 GROUP BY matr_aluno;
 
+-- rascunho
 SELECT * FROM notas;
 
 DELETE FROM notas where id = 4;
