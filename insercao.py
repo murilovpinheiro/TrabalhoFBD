@@ -30,7 +30,22 @@ class Insercao(ttk.Frame):
             if (self.entrys[self.labels[i]].get()) == '':
                 string = string + 'NULL'
             elif self.tipos[i] == 'int':
-                string = string +self.entrys[self.labels[i]].get()
+                string = string + self.entrys[self.labels[i]].get()
+            elif self.tipos[i] == 'sem':
+                test = True
+                if len(list(self.entrys[self.labels[i]].get())) > 8: string = string + "ERROR"
+                for char in (list(self.entrys[self.labels[i]].get())[1:5]):
+                    print(char, "Caractere da STRING <---")
+                    if not(char.isdigit()):
+                        string = string + "'" + "ERROR" + "'"
+                        test = False
+                        break
+                if (int(list(self.entrys[self.labels[i]].get())[6]) == 1 or int(list(self.entrys[self.labels[i]].get())[6]) == 2) and test:
+                    print(list(self.entrys[self.labels[i]].get())[6], 'PONTO <----')
+                    string = string +  "'" +self.entrys[self.labels[i]].get()+"'"
+                else:    
+                    print(list(self.entrys[self.labels[i]].get())[6], "TESTE")
+                    string = string + "'" + "ERROR" + "'"
             else:
                 string = string + "'" +self.entrys[self.labels[i]].get()+ "'"
             if i == len(self.labels) - 1:
@@ -39,6 +54,7 @@ class Insercao(ttk.Frame):
         string = self.comando + "(" + string + ");"
         conn = cnt.conectar()
         cursor = conn.cursor()
+        print(string)
         try:
             cursor.execute(string)
             conn.commit()
