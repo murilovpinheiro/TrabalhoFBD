@@ -136,3 +136,44 @@ CREATE TRIGGER T_ADDDISCIPLINA
 AFTER INSERT OR UPDATE ON disciplina
 FOR EACH ROW
 EXECUTE PROCEDURE add_disciplina();
+
+--  turma existe e se um aluno não pode ser matriculado 2 vezes
+CREATE OR REPLACE FUNCTION add_atd() RETURNS TRIGGER 
+AS
+$BODY$
+BEGIN
+        IF ((NEW.id_disc, NEW.id_turma) not in (select disciplina_id, id from turma))
+        THEN RAISE EXCEPTION 'A TURMA NÃO É DA RESPECTIVA DISCIPLINA';
+        ELSEIF((NEW.matr_aluno, NEW.id_disc) in (select matr_aluno, id_disc from aluno_turma_disc where id != NEW.id))
+        THEN RAISE EXCEPTION 'UM MESMO ALUNO NÃO PODE SER MATRICULADO NA MESMA DISCIPLINA 2 VEZES';
+        ELSE
+        RETURN NEW;
+        END IF;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDATD
+AFTER INSERT OR UPDATE ON aluno_turma_disc
+FOR EACH ROW
+EXECUTE PROCEDURE add_atd();
+
+-- checar se aluno ta matriculado na disciplina q a nota ta sendo inserida
+CREATE OR REPLACE FUNCTION add_nota() RETURNS TRIGGER
+AS
+$BODY$
+BEGIN
+	IF (NEW.id_disc NOT IN (SELECT id FROM disciplina))
+	THEN RAISE EXCEPTION 'A DISCIPLINA NÃO EXISTE';
+	ELSEIF (NEW.id_disc NOT IN (SELECT id_disc FROM aluno_turma_disc atd WHERE NEW.matr_aluno = atd.matr_aluno))
+	THEN RAISE EXCEPTION 'O ALUNO NÃO ESTÁ MATRICULADO NA DISCIPLINA QUE A NOTA PERTENCE';
+	ELSE RETURN NEW;
+	END IF;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDNOTA
+AFTER INSERT OR UPDATE ON notas
+FOR EACH ROW
+EXECUTE PROCEDURE add_nota()

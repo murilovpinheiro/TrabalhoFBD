@@ -12,9 +12,14 @@ SELECT * from turma
 WHERE semestre = '{1111.2}'; -- semestre mutavel
 
 -- 3. Quais locais estão em um dado bloco.
+SELECT * FROM local WHERE bloco = '1'; -- bloco mutavel
 
 -- 4. Visualizar quais turmas estão alocadas em determinado local, mostrando os nomes da turma 
 -- e da disciplina e os horários de aula.
+SELECT d.nome as disciplina_nome, t.id as turma_id, CONCAT(t.horaini, ' - ', t.horafim) as horario_aula
+FROM turma t, local l, disciplina d
+WHERE t.local_id = '1' -- local mutavel
+AND d.id = t.disciplina_id AND t.local_id = l.codigo;
 
 -- 5. Visualizar as médias de um aluno dada a matrícula. (Similar a um histórico escolar)
 SELECT matr_aluno as matricula, AVG(valor) as media
