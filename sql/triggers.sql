@@ -74,7 +74,7 @@ AFTER INSERT OR UPDATE ON professor
 FOR EACH ROW
 EXECUTE PROCEDURE checa_cargo_professor();
 
--- checar formatacao do semestre e horario alem da lotacao
+-- checar formatacao do semestre e horario alem da lotacao com numero de vagas
 CREATE OR REPLACE FUNCTION add_turma() RETURNS TRIGGER 
 AS
 $BODY$
@@ -98,15 +98,34 @@ AFTER INSERT OR UPDATE ON turma
 FOR EACH ROW
 EXECUTE PROCEDURE add_turma();
  
--- checar bloco
+-- checar se local tem bloco nulo e
+-- chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
 CREATE OR REPLACE FUNCTION add_local() RETURNS TRIGGER 
 AS
 $BODY$
+DECLARE 
+	lotacao_total integer;
+	lotacao_soma integer;
 BEGIN
-        IF upper(NEW.tipo) != 'B' AND (NEW.bloco IS NULL) THEN RAISE EXCEPTION 'Necessário Possuir um BLOCO';
-        ELSE
-            RETURN NEW;
-        END IF;
+	-- caso em que o local nao possui bloco
+	IF upper(NEW.tipo) != 'B' AND (NEW.bloco IS NULL) THEN RAISE EXCEPTION 'Necessário Possuir um BLOCO';
+	-- caso em que alteramos ou adicionamos um bloco
+	ELSEIF upper(NEW.tipo) = 'B' THEN 
+		SELECT SUM(lotacao) FROM local WHERE bloco = NEW.codigo INTO lotacao_soma;
+		SELECT lotacao FROM local WHERE codigo = NEW.codigo INTO lotacao_total;
+		IF lotacao_soma > lotacao_total
+		THEN RAISE EXCEPTION 'Soma da lotação das salas ultrapassa a lotação total do bloco';
+		END IF;
+	-- caso em que adicionamos um local que o campo bloco nao esta nulo
+	ELSEIF NEW.tipo != 'B' THEN 
+		SELECT SUM(lotacao) FROM local WHERE bloco = NEW.bloco INTO lotacao_soma;
+		SELECT lotacao FROM local WHERE codigo = NEW.bloco INTO lotacao_total;
+		IF lotacao_soma > lotacao_total 
+		THEN RAISE EXCEPTION 'Soma da lotação das salas ultrapassa a lotação total do bloco';
+		END IF;
+	END IF;
+	
+	RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -142,13 +161,13 @@ CREATE OR REPLACE FUNCTION add_atd() RETURNS TRIGGER
 AS
 $BODY$
 BEGIN
-        IF ((NEW.id_disc, NEW.id_turma) not in (select disciplina_id, id from turma))
-        THEN RAISE EXCEPTION 'A TURMA NÃO É DA RESPECTIVA DISCIPLINA';
-        ELSEIF((NEW.matr_aluno, NEW.id_disc) in (select matr_aluno, id_disc from aluno_turma_disc where id != NEW.id))
-        THEN RAISE EXCEPTION 'UM MESMO ALUNO NÃO PODE SER MATRICULADO NA MESMA DISCIPLINA 2 VEZES';
-        ELSE
-        RETURN NEW;
-        END IF;
+	IF ((NEW.id_disc, NEW.id_turma) not in (select disciplina_id, id from turma))
+	THEN RAISE EXCEPTION 'A TURMA NÃO É DA RESPECTIVA DISCIPLINA';
+	ELSEIF((NEW.matr_aluno, NEW.id_disc) in (select matr_aluno, id_disc from aluno_turma_disc where id != NEW.id))
+	THEN RAISE EXCEPTION 'UM MESMO ALUNO NÃO PODE SER MATRICULADO NA MESMA DISCIPLINA 2 VEZES';
+	ELSE
+	RETURN NEW;
+	END IF;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -177,3 +196,48 @@ CREATE TRIGGER T_ADDNOTA
 AFTER INSERT OR UPDATE ON notas
 FOR EACH ROW
 EXECUTE PROCEDURE add_nota()
+
+-- checar se o prof_id ja coordena um curso quando adicionar ou atualizar um curso (um professor so pode coordenar um curso)
+CREATE OR REPLACE FUNCTION add_curso() RETURNS TRIGGER
+AS
+$BODY$
+DECLARE
+	coord_id integer;
+BEGIN
+	SELECT coord_curso_id FROM professor p WHERE p.id = NEW.id_coord INTO coord_id;
+	IF (coord_id IS NOT NULL) 
+	THEN RAISE EXCEPTION 'Professor ja coordena um curso';
+	END IF;
+	
+	UPDATE professor 
+	SET coord_curso_id = NEW.id
+	WHERE id = NEW.id_coord;
+	
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDCURSO
+AFTER INSERT OR UPDATE ON curso
+FOR EACH ROW
+EXECUTE PROCEDURE add_curso()
+
+-- checar reitor nome e reitor data_nasc = prof nome prof data_nasc
+CREATE OR REPLACE FUNCTION add_reitor() RETURNS TRIGGER
+AS
+$BODY$
+BEGIN
+	IF ((NEW.nome, NEW.data_nasc) NOT IN
+	   (SELECT nome, data_nasc FROM professor WHERE id = NEW.id_professor))
+	THEN RAISE EXCEPTION 'Informações do reitor não correspondem ao do professor com o mesmo id';
+	END IF;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDREITOR
+AFTER INSERT OR UPDATE ON reitor
+FOR EACH ROW
+EXECUTE PROCEDURE add_reitor()

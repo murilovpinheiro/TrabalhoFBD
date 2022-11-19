@@ -8,7 +8,7 @@ matriculados não deve exceder o número de vagas)
 OK Toda sala de aula, biblioteca e/ou auditório devem pertencer a um bloco. Se o local for um
 bloco, este campo deve ser nulo.
 
-NUMERO vagas < LOTACAO DO BLOCO
+OK NUMERO vagas < LOTACAO DO BLOCO
 
 OK trigger pra checar se a turma X tem realmente uma disciplina Y
 
@@ -18,6 +18,8 @@ OK professor ou é diretor de um centro ou coordenador de um curso (ou exclusivo
 
 OK checar se o aluno tá matriculado na disciplina da nota nova
 
-chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
+OK chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
 
-checar se o prof_id ja tem um curso quando adicionar ou atualizar um curso (um professor so pode coordenar um curso)
+OK checar se o prof_id ja tem um curso quando adicionar ou atualizar um curso (um professor so pode coordenar um curso)
+
+OK checar reitor nome e reitor data_nasc = prof nome prof data_nasc
