@@ -2,13 +2,13 @@ class Aluno():
     def __init__(self):
         self.labels = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
                        'Endereço: ', 'Email: ')
-        self.colunasView = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 140))
+        self.colunasView = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 80), ("Rua", 80), ("Casa", 80))
         self.colunas = ('matricula', 'nome', 'sexo', 'data_nasc', 'endereco', 'email')
         self.tipos = ('int', 'str', 'str', 'str', 'int', 'str')
 
         self.insert = "INSERT INTO aluno(matricula, nome, sexo, data_nasc, endereco, email) values "
         self.delete = "Delete from aluno where matricula = "
-        self.selectAll = "select * from aluno"
+        self.selectAll = "SELECT a.*, e.rua, e.casa FROM aluno a, endereco e WHERE a.endereco = e.id;"
         self.select = 'select * from aluno where matricula = '
 
 class Professor():
@@ -79,6 +79,7 @@ class Turma():
         self.delete = 'delete from turma where id = '
         self.selectAll = 'select * from turma'
         self.select = 'select * from turma where id = '
+
 class Endereco():
     def __init__(self):
         self.labels = ('ID: ', 'Rua: ', 'Casa: ', 'Cidade: ', 'Bairro: ', 'Complemento: ')
@@ -103,14 +104,25 @@ class Notas():
         self.selectAll = 'select * from notas'
         self.select = 'select * from notas where id = '
 
+class Cursos_Alunos():
+    def __init__(self):
+        self.labels = ('Matrícula do Aluno: ', 'ID do Curso: ')
+        self.colunasView = (('Matrícula do Aluno', 160), ('ID do Curso', 160))
+        self.colunas = ('matr_aluno', 'id_curso')
+        self.tipos = ('int', 'int')
 
+        self.insert = 'INSERT INTO cursos_alunos(matr_aluno, id_curso) values'
+        self.delete = 'DELETE FROM cursos_alunos WHERE matr_aluno = '
+        self.selectAll = 'SELECT * FROM cursos_alunos' 
+        self.select = 'SELECT * FROM cursos_alunos WHERE matr_aluno = '
 
-    # self.labels = 
+    # def __init__(self):
+        # self.labels =  
         # self.colunasView = 
         # self.colunas = 
         # self.tipos = 
 
-        # self.insert = 
-        # self.delete = 
-        # self.selectAll = 
-        # self.select = 
+        # self.insert = ''
+        # self.delete = ''
+        # self.selectAll = '' 
+        # self.select = ''

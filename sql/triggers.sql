@@ -81,7 +81,7 @@ $BODY$
 DECLARE
     numero_lotacao integer;
 BEGIN
-    IF (NEW.semestre NOT LIKE '{%.%}') THEN RAISE EXCEPTION 'Erro, Semestre não está corretamente formatado';
+    IF (NEW.semestre NOT LIKE '%.%') THEN RAISE EXCEPTION 'Erro, Semestre não está corretamente formatado';
     END IF;
     IF (NEW.horaini >= NEW.horafim) THEN RAISE EXCEPTION 'Horario final é antes do horario final';
     END IF;
