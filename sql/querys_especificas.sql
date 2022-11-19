@@ -22,10 +22,10 @@ WHERE t.local_id = '1' -- local mutavel
 AND d.id = t.disciplina_id AND t.local_id = l.codigo;
 
 -- 5. Visualizar as médias de um aluno dada a matrícula. (Similar a um histórico escolar)
-SELECT matr_aluno as matricula, AVG(valor) as media
-FROM notas
-WHERE matr_aluno = '509299' -- matricula mutavel
-GROUP BY matr_aluno;
+SELECT d.nome as disciplina, AVG(n.valor) as media
+FROM notas n, disciplina d
+WHERE d.id = n.id_disc AND matr_aluno = '509299' -- matricula mutavel
+GROUP BY d.nome;
 
 -- rascunho
 SELECT * FROM notas;

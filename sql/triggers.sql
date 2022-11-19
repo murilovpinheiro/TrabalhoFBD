@@ -74,7 +74,7 @@ AFTER INSERT OR UPDATE ON professor
 FOR EACH ROW
 EXECUTE PROCEDURE checa_cargo_professor();
 
--- checar formatacao do semestre e horario alem da lotacao
+-- checar formatacao do semestre e horario alem da lotacao com numero de vagas
 CREATE OR REPLACE FUNCTION add_turma() RETURNS TRIGGER 
 AS
 $BODY$
@@ -196,3 +196,48 @@ CREATE TRIGGER T_ADDNOTA
 AFTER INSERT OR UPDATE ON notas
 FOR EACH ROW
 EXECUTE PROCEDURE add_nota()
+
+-- checar se o prof_id ja coordena um curso quando adicionar ou atualizar um curso (um professor so pode coordenar um curso)
+CREATE OR REPLACE FUNCTION add_curso() RETURNS TRIGGER
+AS
+$BODY$
+DECLARE
+	coord_id integer;
+BEGIN
+	SELECT coord_curso_id FROM professor p WHERE p.id = NEW.id_coord INTO coord_id;
+	IF (coord_id IS NOT NULL) 
+	THEN RAISE EXCEPTION 'Professor ja coordena um curso';
+	END IF;
+	
+	UPDATE professor 
+	SET coord_curso_id = NEW.id
+	WHERE id = NEW.id_coord;
+	
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDCURSO
+AFTER INSERT OR UPDATE ON curso
+FOR EACH ROW
+EXECUTE PROCEDURE add_curso()
+
+-- checar reitor nome e reitor data_nasc = prof nome prof data_nasc
+CREATE OR REPLACE FUNCTION add_reitor() RETURNS TRIGGER
+AS
+$BODY$
+BEGIN
+	IF ((NEW.nome, NEW.data_nasc) NOT IN
+	   (SELECT nome, data_nasc FROM professor WHERE id = NEW.id_professor))
+	THEN RAISE EXCEPTION 'Informações do reitor não correspondem ao do professor com o mesmo id';
+	END IF;
+	RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER T_ADDREITOR
+AFTER INSERT OR UPDATE ON reitor
+FOR EACH ROW
+EXECUTE PROCEDURE add_reitor()
