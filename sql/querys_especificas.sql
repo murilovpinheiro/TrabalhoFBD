@@ -4,8 +4,8 @@ SELECT m.matr_aluno as matricula, m.media, t.id as turma_id, t.disciplina_id
 FROM (SELECT matr_aluno, AVG(valor) as media
 	  FROM notas 
 	  GROUP BY matr_aluno) m, aluno_turma_disc atd, turma t
-WHERE t.id = '1' AND atd.id_disc = t.disciplina_id AND atd.id_turma = t.id AND m.matr_aluno IN -- id mutavel
-(SELECT matr_aluno FROM notas WHERE id_disc = t.disciplina_id); 
+WHERE atd.id_disc = t.disciplina_id AND atd.id_turma = t.id AND m.matr_aluno IN -- id mutavel
+(SELECT matr_aluno FROM notas WHERE id_disc = t.disciplina_id) AND  t.id = '1'; 
 
 -- 2. Verificar todas as turmas de determinado semestre.
 SELECT * from turma

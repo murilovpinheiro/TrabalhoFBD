@@ -63,20 +63,49 @@ class Turma():
     def __init__(self):
         self.labels =  ('ID: ', 'Estado(1 para Aberta, 0 para Fechada): ', 'Quantidade de Alunos: ',
                              'Vagas: ','Hora Inicial: ', 'Hora Final: ',
-                             'ID da Disciplina: ', 'Ano e Semestre (Formato {AAAA.S}): ', 'ID do Local: ')
+                             'ID da Disciplina: ', 'Ano e Semestre (Formato {AAAA.S}): ', 'ID do Local: ',
+                              'Tem aula Segunda? (SIM ou NÃO)', 'Tem aula Terça? (SIM ou NÃO)','Tem aula Quarta? (SIM ou NÃO)',
+                              'Tem aula Quinta? (SIM ou NÃO)','Tem aula Sexta? (SIM ou NÃO)')
         self.colunasView = (('ID', 60), ('Estado', 80), ('Quantidade de Alunos', 120),
-                             ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80), ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80))
+                            ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80),
+                            ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80),
+                            ('Aula Segunda', 80), ('Aula Terça', 80), ('Aula Quarta', 80), ('Aula Quinta', 80), ('Aula Sexta', 80))
         self.colunas = ('id', 'estado', 'qnt_alunos', 'vagas',
-                        'horaini','horafim', 'disciplina_id', 'semestre', 'local_id')
-        self.tipos = ('int', 'bool', 'int', 'int', 'int', 'int', 'int', 'sem', 'int')
+                        'horaini','horafim', 'disciplina_id', 'semestre', 'local_id',
+                        'dia_segunda','dia_terca', 'dia_quarta', 'dia_quinta', 'dia_sexta')
+        self.tipos = ('int', 'bool', 'int', 'int', 'int', 'int', 'int', 'sem', 'int', 'str', 'str', 'str', 'str', 'str')
 
-        self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id ) values'
+        self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id, dia_segunda,dia_terca, dia_quarta, dia_quinta, dia_sexta) values'
         self.delete = 'delete from turma where id = '
         self.selectAll = 'select * from turma'
         self.select = 'select * from turma where id = '
+class Endereco():
+    def __init__(self):
+        self.labels = ('ID: ', 'Rua: ', 'Casa: ', 'Cidade: ', 'Bairro: ', 'Complemento: ')
+        self.colunasView = (('ID', 100), ('Rua', 120), ('Casa', 80), ('Cidade', 140), ('Bairro', 140), ('Complemento', 120))
+        self.colunas = ('id', 'rua', 'casa', 'cidade', 'bairro', 'complemento')
+        self.tipos = ('int', 'str', 'str', 'str', 'str', 'str')
+
+        self.insert = 'insert into endereco(id, rua, casa, cidade, bairro, complemento) values'
+        self.delete = 'delete from endereco where id = '
+        self.selectAll = 'select * from endereco'
+        self.select = 'select * from endereco where id = '
+
+class Notas():
+    def __init__(self):
+        self.labels = ('ID: ', 'Valor: ', 'Matrícula do Aluno: ', 'ID da Disciplina: ')
+        self.colunasView = (('ID', 60), ('Valor', 100), ('Matrícula do Aluno', 160), ('ID da Disciplina', 160))
+        self.colunas = ('id', 'valor', 'matr_aluno', 'id_disc')
+        self.tipos = ('int', 'int', 'int', 'int')
+
+        self.insert = 'insert into notas(id, valor, matr_aluno, id_disc) values '
+        self.delete = 'delete from notas where id = '
+        self.selectAll = 'select * from notas'
+        self.select = 'select * from notas where id = '
 
 
-        # self.labels = 
+
+    # self.labels = 
         # self.colunasView = 
         # self.colunas = 
         # self.tipos = 

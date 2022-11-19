@@ -1,7 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import telas.conectar as cnt
+import conect as cnt
 
 class Alteracao(ttk.Frame):
     def __init__(self, labelPrincipal, local, localForm, codigoPesq, tabela, labels, colunas, tipos):
@@ -22,10 +22,10 @@ class Alteracao(ttk.Frame):
     def createSearch(self):
         lb = ttk.Label(self.local, text = self.labelPrincipal)
         e = ttk.Entry(self.local)
-        lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
+        lb.pack( expand = True, pady = 3, side = TOP, anchor = CENTER)
         e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
         button = ttk.Button(self.local, text = "Pesquisar", command = lambda: self.pesquisar(e))
-        button.pack(expand = True, pady = 25, anchor = CENTER)
+        button.pack(expand = True, pady = 10, anchor = CENTER)
 
 
     def pesquisar(self, e):
@@ -60,13 +60,13 @@ class Alteracao(ttk.Frame):
             lb = ttk.Label(self.localForm, text = label)
             e = ttk.Entry(self.localForm)
             self.entrys[label] = e
-            lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
+            lb.pack( expand = True, pady = 5, side = TOP, anchor = CENTER)
             e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
             if resultado[0][i] != None:
                 e.insert(END, resultado[0][i])
             i+=1
         button = ttk.Button(self.localForm, text = "Pesquisar", command = lambda : self.atualizar(pk))
-        button.pack( expand = True, pady = 25, anchor = CENTER)
+        button.pack( expand = True, pady = 15, anchor = CENTER)
 
     def atualizar(self, pk):
         string = ''

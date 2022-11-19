@@ -1,15 +1,19 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import conectar as cnt
+import conect as cnt
 
 class Pesquisa(ttk.Frame):
-    def __init__(self, labelPrincipal ,local, localTable, comando, columns):
+    def __init__(self, labelPrincipal ,local, localTable, comando, columns, agrupamento):
+        #exemplo: lp = Digite o ID da Turma
+        #comando = select * from turma where ID = blabla
+        #columns é o columns view
         super().__init__(local)
         self.labelPrincipal = labelPrincipal
         self.local = local
         self.localTable = localTable
         self.comando = comando
+        self.agrupamento = agrupamento
         self.columns = columns
         self.valor = 0
         self.pack()
@@ -31,7 +35,7 @@ class Pesquisa(ttk.Frame):
         if self.valor != "":
             conn = cnt.conectar()
             cursor = conn.cursor()
-            string = self.comando + self.valor
+            string = self.comando + "'" + self.valor + "'" + self.agrupamento
             print(string)
             cursor.execute(string)
             resultado = cursor.fetchall()
@@ -52,7 +56,7 @@ class Pesquisa(ttk.Frame):
         scroll = ttk.Scrollbar(self.localTable)
         scroll.pack(side = RIGHT, fill = Y)
 
-        table = ttk.Treeview(self.localTable, yscrollcommand = scroll.set, height = 1)
+        table = ttk.Treeview(self.localTable, yscrollcommand = scroll.set, height = 5)
         # table.bind('<Button-1>', disableEvent)
         # table.bind('<Key>', teste)
         table.pack(fill = BOTH, expand=True)
@@ -71,21 +75,21 @@ class Pesquisa(ttk.Frame):
             table.insert(parent = "", index = "end", iid = i, text = '', values = resultado[i])
 
 
-if __name__ == "__main__":
-    root = Tk()
-    root.title("Tela Dinamica")
-    root.geometry("800x600")
-    root.resizable(False, False)
+# if __name__ == "__main__":
+#     root = Tk()
+#     root.title("Tela Dinamica")
+#     root.geometry("800x600")
+#     root.resizable(False, False)
 
-    framePesq = Frame(root)
-    framePesq.pack(padx = 10, pady = 0, fill = "x")
-    frameForm = Frame(root)
-    frameForm.pack(padx = 10, pady = 0, fill = "x", side = TOP)
-    names = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
-            'Endereço: ', 'Email: ')
-    colunas = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 80))
-    nome = "Pesquise um Aluno pela Matrícula: "
-    classe = Pesquisa(nome, framePesq, frameForm, "select * from aluno where matricula = ", colunas)
-    classe.createSearch()
-    root.mainloop()
-#
+#     framePesq = Frame(root)
+#     framePesq.pack(padx = 10, pady = 0, fill = "x")
+#     frameForm = Frame(root)
+#     frameForm.pack(padx = 10, pady = 0, fill = "x", side = TOP)
+#     names = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
+#             'Endereço: ', 'Email: ')
+#     colunas = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 80))
+#     nome = "Pesquise um Aluno pela Matrícula: "
+#     classe = Pesquisa(nome, framePesq, frameForm, "select * from aluno where matricula = ", colunas)
+#     classe.createSearch()
+#     root.mainloop()
+# #

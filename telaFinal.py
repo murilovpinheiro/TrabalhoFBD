@@ -1,21 +1,23 @@
 from tkinter import *
 from  tkinter import ttk
-import telas.alterar as ins
-import telas.visualizar as vsz
-import telas.alterar as alt
-import telas.remover as rmc
+import visualizar as vsz
+import alterar as alt
+import remover as rmc
+import inserir as ins
+import pesquisar as psq
 import tabelas
+import querys as qrs
 
 class App(Tk): #App eh uma subclasse de Tk
     def __init__(self):
         super().__init__()
         #construtor de app que chama o construtor de Tk
         self.title("Tela1")
-        self.geometry("1200x800")
+        self.geometry("1800x1600")
 
         classes = self.inicializarClasses()
-
-        self.createMenu(classes)
+        querys = self.inicializarQuerys()
+        self.createMenu(classes, querys)
 
         # self.createMenuAluno(menu)
         # self.createMenuProf(menu)
@@ -30,19 +32,41 @@ class App(Tk): #App eh uma subclasse de Tk
         curso = tabelas.Curso()
         atd = tabelas.Aluno_turma_disc()
         turma = tabelas.Turma()
+        endereco = tabelas.Endereco()
+        notas = tabelas.Notas()
         classes = ((aluno, "Aluno"),
                    (prof, "Professor"),
                    (curso, "Curso"),
                    (disc, "Disciplina"),
                    (atd, "Aluno_turma_disc"),
-                   (turma, "Turma"))
+                   (turma, "Turma"),
+                   (endereco, "Endereco"),
+                   (notas, "Notas"))
         return classes
     
-    def createMenu(self, classes):
+    def inicializarQuerys(self):
+        turma_sem = qrs.Turma_Semestre()
+        media_turma = qrs.Media_Turma()
+        local_bloco = qrs.Local_Bloco()
+        turma_local = qrs.Turma_Local()
+        media_aluno = qrs.Media_Aluno()
+        querys = ((turma_sem, "Turma por Semestre"),
+                  (media_turma, "Média da Turma"),
+                  (local_bloco, "Local por Bloco"),
+                  (turma_local, "Turma por Local"),
+                  (media_aluno, "Média de um Aluno"))
+        return querys
+
+
+    def createMenu(self, classes, querys):
         menu = Menu(self)
         self.config(menu = menu)
         for classe in classes:
             self.createMenuBar(menu, classe[0], classe[1])
+        bar = Menu(menu)
+        for query in querys:
+            self.createPesquisas(bar, query)
+        menu.add_cascade(label='Pesquisas', menu=bar)
 
     def createMenuBar(self, menu, classe, nome):
             #aluno = tabelas.Aluno()
@@ -55,13 +79,18 @@ class App(Tk): #App eh uma subclasse de Tk
                     (classe.labels, {},classe.insert), classe.tipos))
             bar.add_command(label = 'Atualizar',
                     command= lambda : self.selecionarAlteracao(framePrincipal,
-                    ('Pesquise na tabela ' +nome+ ' pelo identificador da tabela: ',
+                    ('Pesquise na tabela ' + nome + ' pelo identificador da tabela: ',
                     classe.select, nome), classe.colunas, classe.labels, classe.tipos))
             bar.add_command(label = 'Remover', 
                     command= lambda : self.selecionarRemocao("Digite o identificador da tabela "+ nome + " que deseja remover: ", framePrincipal,
                     classe.delete))
             menu.add_cascade(label=nome,
                     menu=bar)
+    
+    def createPesquisas(self, bar, query):
+        bar.add_command(label = query[1], command= lambda : self.selecionarPesquisa(framePrincipal, query[0].label, query[0].codigo, query[0].colunasView, query[0].agrupamento))
+        
+
 
     def selecionarVisualizar(event, antigo, lista, comando):
         for widget in antigo.winfo_children():
@@ -92,6 +121,16 @@ class App(Tk): #App eh uma subclasse de Tk
         classe = rmc.Remocao(label, antigo, codigo)
         classe.createDelete()
         classe.pack()
+    
+    def selecionarPesquisa(event, antigo, label, comando, colunas, agrupamento):
+        for widget in antigo.winfo_children():
+            widget.destroy()
+        frameTable = ttk.Frame(antigo)
+        frameTable.pack(padx = 10, pady = 0, fill = "x", expand = True, anchor = CENTER, side = BOTTOM)
+        classe = psq.Pesquisa(label, antigo, frameTable, comando, colunas, agrupamento)
+        classe.createSearch()
+        classe.pack()
+
         
 if __name__ == "__main__":
     app = App()

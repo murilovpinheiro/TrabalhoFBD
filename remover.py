@@ -1,7 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import telas.conectar as cnt
+import conect as cnt
 
 class Remocao(ttk.Frame):
     def __init__(self, labelPrincipal, local, codigo):
@@ -23,6 +23,7 @@ class Remocao(ttk.Frame):
 
     def deletar(self, e):
         if e != "":
+            
             try:
                 conn = cnt.conectar()
                 cursor = conn.cursor()
@@ -33,8 +34,8 @@ class Remocao(ttk.Frame):
                 cursor.close()
                 conn.close()
                 showinfo("AVISO", "Valor deletado com sucesso.\n")
-            except:
-                showinfo("ERRO", "Valor não encontrado.\n")
+            except Exception as e:
+                showinfo("ERRO", "Não foi possível deletar.\n" + str(e))
         else:
             showinfo("ERRO","Digite um Valor\n")
             cursor.close()
