@@ -18,6 +18,6 @@ OK professor ou é diretor de um centro ou coordenador de um curso (ou exclusivo
 
 OK checar se o aluno tá matriculado na disciplina da nota nova
 
-chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
+OK chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
 
 checar se o prof_id ja tem um curso quando adicionar ou atualizar um curso (um professor so pode coordenar um curso)

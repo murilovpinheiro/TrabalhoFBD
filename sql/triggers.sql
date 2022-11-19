@@ -98,15 +98,34 @@ AFTER INSERT OR UPDATE ON turma
 FOR EACH ROW
 EXECUTE PROCEDURE add_turma();
  
--- checar bloco
+-- checar se local tem bloco nulo e
+-- chechar se a soma da lotacao das salas de um bloco eh menor que a lotacao total do bloco
 CREATE OR REPLACE FUNCTION add_local() RETURNS TRIGGER 
 AS
 $BODY$
+DECLARE 
+	lotacao_total integer;
+	lotacao_soma integer;
 BEGIN
-        IF upper(NEW.tipo) != 'B' AND (NEW.bloco IS NULL) THEN RAISE EXCEPTION 'Necessário Possuir um BLOCO';
-        ELSE
-            RETURN NEW;
-        END IF;
+	-- caso em que o local nao possui bloco
+	IF upper(NEW.tipo) != 'B' AND (NEW.bloco IS NULL) THEN RAISE EXCEPTION 'Necessário Possuir um BLOCO';
+	-- caso em que alteramos ou adicionamos um bloco
+	ELSEIF upper(NEW.tipo) = 'B' THEN 
+		SELECT SUM(lotacao) FROM local WHERE bloco = NEW.codigo INTO lotacao_soma;
+		SELECT lotacao FROM local WHERE codigo = NEW.codigo INTO lotacao_total;
+		IF lotacao_soma > lotacao_total
+		THEN RAISE EXCEPTION 'Soma da lotação das salas ultrapassa a lotação total do bloco';
+		END IF;
+	-- caso em que adicionamos um local que o campo bloco nao esta nulo
+	ELSEIF NEW.tipo != 'B' THEN 
+		SELECT SUM(lotacao) FROM local WHERE bloco = NEW.bloco INTO lotacao_soma;
+		SELECT lotacao FROM local WHERE codigo = NEW.bloco INTO lotacao_total;
+		IF lotacao_soma > lotacao_total 
+		THEN RAISE EXCEPTION 'Soma da lotação das salas ultrapassa a lotação total do bloco';
+		END IF;
+	END IF;
+	
+	RETURN NEW;
 END;
 $BODY$
 LANGUAGE plpgsql;
@@ -142,13 +161,13 @@ CREATE OR REPLACE FUNCTION add_atd() RETURNS TRIGGER
 AS
 $BODY$
 BEGIN
-        IF ((NEW.id_disc, NEW.id_turma) not in (select disciplina_id, id from turma))
-        THEN RAISE EXCEPTION 'A TURMA NÃO É DA RESPECTIVA DISCIPLINA';
-        ELSEIF((NEW.matr_aluno, NEW.id_disc) in (select matr_aluno, id_disc from aluno_turma_disc where id != NEW.id))
-        THEN RAISE EXCEPTION 'UM MESMO ALUNO NÃO PODE SER MATRICULADO NA MESMA DISCIPLINA 2 VEZES';
-        ELSE
-        RETURN NEW;
-        END IF;
+	IF ((NEW.id_disc, NEW.id_turma) not in (select disciplina_id, id from turma))
+	THEN RAISE EXCEPTION 'A TURMA NÃO É DA RESPECTIVA DISCIPLINA';
+	ELSEIF((NEW.matr_aluno, NEW.id_disc) in (select matr_aluno, id_disc from aluno_turma_disc where id != NEW.id))
+	THEN RAISE EXCEPTION 'UM MESMO ALUNO NÃO PODE SER MATRICULADO NA MESMA DISCIPLINA 2 VEZES';
+	ELSE
+	RETURN NEW;
+	END IF;
 END;
 $BODY$
 LANGUAGE plpgsql;
