@@ -59,7 +59,7 @@ class Insercao(ttk.Frame):
             conn.commit()
             showinfo("Aviso", "Salvou")
         except Exception as e:
-            showinfo("ERRO",("Dados Digitados são Inválidos: \n", e))
+            showinfo("ERRO","Dados Digitados são Inválidos: \n" + str(e))
             if (str(e).find("invalid input syntax for type integer") )> -1:
                 print("Valor Digitado Inválido")
         cursor.close()

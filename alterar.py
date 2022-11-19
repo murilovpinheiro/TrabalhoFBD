@@ -106,7 +106,7 @@ class Alteracao(ttk.Frame):
             conn.commit()
             showinfo("Aviso: ", "Salvou")
         except Exception as e:
-            showinfo("ERRO",("Dados Digitados são Inválidos: \n %e", e))
+            showinfo("ERRO","Dados Digitados são Inválidos: \n %e" + str(e))
         cursor.close()
         conn.close()
 
