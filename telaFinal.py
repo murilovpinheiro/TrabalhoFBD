@@ -1,9 +1,9 @@
 from tkinter import *
 from  tkinter import ttk
-import insercao as ins
-import telaPesquisaAluno as vsz
-import alteracaoDinamica as alt
-import remocao as rmc
+import telas.alterar as ins
+import telas.visualizar as vsz
+import telas.alterar as alt
+import telas.remover as rmc
 import tabelas
 
 class App(Tk): #App eh uma subclasse de Tk
@@ -81,7 +81,7 @@ class App(Tk): #App eh uma subclasse de Tk
         for widget in antigo.winfo_children():
             widget.destroy()
         frameForm = ttk.Frame(antigo)
-        frameForm.pack( padx = 10, pady = 0, fill = "x", expand = True, anchor = CENTER)
+        frameForm.pack( padx = 10, pady = 0, fill = "x", expand = True, anchor = CENTER, side = BOTTOM)
         classe = alt.Alteracao(valores[0], antigo, frameForm, valores[1], valores[2], names, colunas, tipos)
         classe.createSearch()
         classe.pack()

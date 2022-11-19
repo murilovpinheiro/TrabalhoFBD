@@ -1,7 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import conectar as cnt
+import telas.conectar as cnt
 import psycopg2 as psc
 
 class Insercao(ttk.Frame):
