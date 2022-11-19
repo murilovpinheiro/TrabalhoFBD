@@ -2,7 +2,7 @@ class Aluno():
     def __init__(self):
         self.labels = ('Matricula: ','Nome: ', 'Sexo: ', 'Data de Nascimento: ',
                        'Endereço: ', 'Email: ')
-        self.colunasView = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 80))
+        self.colunasView = (("Matrícula", 80),("Nome", 80), ("Sexo", 80), ("Data Nascimento", 140), ("Endereco", 80), ("Email", 140))
         self.colunas = ('matricula', 'nome', 'sexo', 'data_nasc', 'endereco', 'email')
         self.tipos = ('int', 'str', 'str', 'str', 'int', 'str')
 
@@ -66,14 +66,14 @@ class Turma():
                              'ID da Disciplina: ', 'Ano e Semestre (Formato {AAAA.S}): ', 'ID do Local: ',
                               'Tem aula Segunda? (SIM ou NÃO)', 'Tem aula Terça? (SIM ou NÃO)','Tem aula Quarta? (SIM ou NÃO)',
                               'Tem aula Quinta? (SIM ou NÃO)','Tem aula Sexta? (SIM ou NÃO)')
-        self.colunasView = (('ID', 60), ('Estado', 80), ('Quantidade de Alunos', 120),
+        self.colunasView = (('ID', 60), ('Estado', 120), ('Quantidade de Alunos', 120),
                             ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80),
                             ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80),
                             ('Aula Segunda', 80), ('Aula Terça', 80), ('Aula Quarta', 80), ('Aula Quinta', 80), ('Aula Sexta', 80))
         self.colunas = ('id', 'estado', 'qnt_alunos', 'vagas',
                         'horaini','horafim', 'disciplina_id', 'semestre', 'local_id',
                         'dia_segunda','dia_terca', 'dia_quarta', 'dia_quinta', 'dia_sexta')
-        self.tipos = ('int', 'bool', 'int', 'int', 'int', 'int', 'int', 'sem', 'int', 'str', 'str', 'str', 'str', 'str')
+        self.tipos = ('int', 'str', 'int', 'int', 'int', 'int', 'int', 'sem', 'int', 'str', 'str', 'str', 'str', 'str')
 
         self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id, dia_segunda,dia_terca, dia_quarta, dia_quinta, dia_sexta) values'
         self.delete = 'delete from turma where id = '
