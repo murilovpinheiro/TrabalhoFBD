@@ -140,13 +140,26 @@ class Campus():
         self.selectAll = 'SELECT * FROM campus' 
         self.select = 'SELECT * FROM campus WHERE id = '
 
-    # def __init__(self):
-        # self.labels =  
-        # self.colunasView = 
-        # self.colunas = 
-        # self.tipos = 
+class Reitor():
+    def __init__(self):
+        self.labels = ('ID: ', 'Nome do Reitor: ', 'Data de nascimento: ', 'Data de admissão: ', 'ID do Professor: ') 
+        self.colunasView = (('ID', 60), ('Nome do Reitor', 160), ('Data de nascimento', 180), ('Data de admissão', 160), ('ID do Professor', 160))
+        self.colunas = ('codigo', 'nome', 'data_nasc', 'data_adm', 'id_professor')
+        self.tipos = ('int', 'str', 'str', 'str', 'int')
 
-        # self.insert = ''
-        # self.delete = ''
-        # self.selectAll = '' 
-        # self.select = ''
+        self.insert = 'INSERT INTO reitor(codigo, nome, data_nasc, data_adm, id_professor) values'
+        self.delete = 'DELETE FROM reitor WHERE codigo = '
+        self.selectAll = 'SELECT * FROM reitor' 
+        self.select = 'SELECT * FROM reitor WHERE codigo = '
+
+class Local():
+    def __init__(self):
+        self.labels =  ('ID: ', 'Nome do Local: ', 'ID do Bloco: ', 'Lotação do Local: ', 'Descrição do Local: ', 'Tipo do Local: ')
+        self.colunasView = (('ID', 60), ('Nome do Local', 160), ('ID do Bloco', 160), ('Lotacao do Local', 160), ('Descrição do Local', 200), ('Tipo do Local', 160))
+        self.colunas = ('codigo', 'nome', 'bloco', 'lotacao', 'descricao', 'tipo')
+        self.tipos = ('int', 'str', 'int', 'int', 'str', 'str')
+
+        self.insert = 'INSERT INTO local(codigo, nome, bloco, lotacao, descricao, tipo) values'
+        self.delete = 'DELETE FROM local WHERE codigo = '
+        self.selectAll = 'SELECT * FROM local' 
+        self.select = 'SELECT * FROM local WHERE codigo = '

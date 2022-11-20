@@ -37,6 +37,8 @@ class App(Tk): #App eh uma subclasse de Tk
         cursos_alunos = tabelas.Cursos_Alunos()
         centro = tabelas.Centro()
         campus = tabelas.Campus()
+        reitor = tabelas.Reitor()
+        local = tabelas.Local()
         classes = ((aluno, "Aluno"),
                    (prof, "Professor"),
                    (curso, "Curso"),
@@ -47,7 +49,9 @@ class App(Tk): #App eh uma subclasse de Tk
                    (notas, "Notas"),
                    (cursos_alunos, "Cursos_alunos"),
                    (centro, "Centro"),
-                   (campus, "Campus"))
+                   (campus, "Campus"),
+                   (reitor, "Reitor"),
+                   (local, "Local"))
         return classes
     
     def inicializarQuerys(self):
@@ -57,10 +61,10 @@ class App(Tk): #App eh uma subclasse de Tk
         turma_local = qrs.Turma_Local()
         media_aluno = qrs.Media_Aluno()
         querys = ((turma_sem, "Turma por Semestre"),
-                  (media_turma, "Média da Turma"),
-                  (local_bloco, "Local por Bloco"),
-                  (turma_local, "Turma por Local"),
-                  (media_aluno, "Média de um Aluno"))
+                  (media_turma, "Médias da Turma"),
+                  (local_bloco, "Locais por Bloco"),
+                  (turma_local, "Turmas por Local"),
+                  (media_aluno, "Médias de um Aluno"))
         return querys
 
 
