@@ -116,6 +116,18 @@ class Cursos_Alunos():
         self.selectAll = 'SELECT * FROM cursos_alunos' 
         self.select = 'SELECT * FROM cursos_alunos WHERE matr_aluno = '
 
+class Centro():
+    def __init__(self):
+        self.labels = ('ID: ', 'Nome do Centro: ', 'ID do Campus: ', 'ID do Diretor: ')  
+        self.colunasView = (('ID', 60), ('Nome do Centro', 160), ('ID do Campus', 160), ('ID do Diretor', 160))
+        self.colunas = ('id', 'nome', 'id_campus', 'id_diretor')
+        self.tipos = ('int', 'str', 'int', 'int')
+
+        self.insert = 'INSERT INTO centro(id, nome, id_campus, id_diretor) values'
+        self.delete = 'DELETE FROM centro WHERE id = '
+        self.selectAll = 'SELECT * FROM centro' 
+        self.select = 'SELECT * FROM centro WHERE id = '
+
     # def __init__(self):
         # self.labels =  
         # self.colunasView = 
