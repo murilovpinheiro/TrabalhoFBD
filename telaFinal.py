@@ -60,7 +60,7 @@ class App(Tk): #App eh uma subclasse de Tk
         local_bloco = qrs.Local_Bloco()
         turma_local = qrs.Turma_Local()
         media_aluno = qrs.Media_Aluno()
-        querys = ((turma_sem, "Turma por Semestre"),
+        querys = ((turma_sem, "Turmas por Semestre"),
                   (media_turma, "Médias da Turma"),
                   (local_bloco, "Locais por Bloco"),
                   (turma_local, "Turmas por Local"),
