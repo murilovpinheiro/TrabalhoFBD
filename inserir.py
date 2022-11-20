@@ -20,7 +20,7 @@ class Insercao(ttk.Frame):
             self.entrys[name] = e
             lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
             e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
-        button = ttk.Button(self, text = "Pesquisar", command = self.inserir)
+        button = ttk.Button(self, text = "Inserir", command = self.inserir)
         button.pack( expand = True, pady = 25, anchor = CENTER)
 
     def inserir(self):
@@ -33,17 +33,16 @@ class Insercao(ttk.Frame):
             elif self.tipos[i] == 'sem':
                 test = True
                 if len(list(self.entrys[self.labels[i]].get())) > 8: string = string + "ERROR"
-                for char in (list(self.entrys[self.labels[i]].get())[1:5]):
+                for char in (list(self.entrys[self.labels[i]].get())[0:4]):
                     print(char, "Caractere da STRING <---")
                     if not(char.isdigit()):
                         string = string + "'" + "ERROR" + "'"
                         test = False
                         break
-                if (int(list(self.entrys[self.labels[i]].get())[6]) == 1 or int(list(self.entrys[self.labels[i]].get())[6]) == 2) and test:
-                    print(list(self.entrys[self.labels[i]].get())[6], 'PONTO <----')
+                if (int(list(self.entrys[self.labels[i]].get())[5]) == 1 or int(list(self.entrys[self.labels[i]].get())[5]) == 2) and test:
+                    print(list(self.entrys[self.labels[i]].get())[4], 'PONTO <----')
                     string = string +  "'" +self.entrys[self.labels[i]].get()+"'"
-                else:    
-                    print(list(self.entrys[self.labels[i]].get())[6], "TESTE")
+                else:
                     string = string + "'" + "ERROR" + "'"
             else:
                 string = string + "'" +self.entrys[self.labels[i]].get()+ "'"

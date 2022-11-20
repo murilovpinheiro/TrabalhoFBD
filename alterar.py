@@ -65,7 +65,7 @@ class Alteracao(ttk.Frame):
             if resultado[0][i] != None:
                 e.insert(END, resultado[0][i])
             i+=1
-        button = ttk.Button(self.localForm, text = "Pesquisar", command = lambda : self.atualizar(pk))
+        button = ttk.Button(self.localForm, text = "Alterar", command = lambda : self.atualizar(pk))
         button.pack( expand = True, pady = 15, anchor = CENTER)
 
     def atualizar(self, pk):
@@ -87,8 +87,7 @@ class Alteracao(ttk.Frame):
                 if (list(self.entrys[self.labels[i]].get())[5] == '1' or list(self.entrys[self.labels[i]].get())[5] == '2') and test:
                     print(list(self.entrys[self.labels[i]].get())[4], 'PONTO <----')
                     string = string + self.colunas[i] + " = " +  "'" +self.entrys[self.labels[i]].get()+"'"
-                else:    
-                    print(list(self.entrys[self.labels[i]].get())[6], "TESTE")
+                else:
                     string = string + "'" + "ERROR" + "'"
             else:
                 string = string + self.colunas[i] + " = " + "'" + self.entrys[self.labels[i]].get() + "'"
