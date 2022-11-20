@@ -1,15 +1,16 @@
 -- 1. Visualizar a média de cada aluno matriculado em uma turma já concluída.
 -- checar no python se a turma entrada eh fechada (false)
-SELECT m.matr_aluno as matricula, m.media, t.id as turma_id, t.disciplina_id
-FROM (SELECT matr_aluno, AVG(valor) as media
-	  FROM notas 
-	  GROUP BY matr_aluno) m, aluno_turma_disc atd, turma t
-WHERE atd.id_disc = t.disciplina_id AND atd.id_turma = t.id AND m.matr_aluno IN -- id mutavel
-(SELECT matr_aluno FROM notas WHERE id_disc = t.disciplina_id) AND  t.id = '1'; 
+SELECT aux.matr_aluno, aux.media
+FROM
+(SELECT atd.matr_aluno, atd.id_disc, atd.id_turma, AVG(n.valor) as media
+FROM notas n, aluno_turma_disc atd, turma t
+WHERE n.id_disc = atd.id_disc AND t.id = atd.id_turma AND atd.matr_aluno = n.matr_aluno AND t.estado = 'FECHADA'
+GROUP BY (atd.matr_aluno, atd.id_disc, atd.id_turma)) aux
+WHERE aux.id_turma = '3'; -- id_turma mutavel
 
 -- 2. Verificar todas as turmas de determinado semestre.
 SELECT * from turma
-WHERE semestre = '{1111.2}'; -- semestre mutavel
+WHERE semestre = '1111.2'; -- semestre mutavel
 
 -- 3. Quais locais estão em um dado bloco.
 SELECT * FROM local WHERE bloco = '1'; -- bloco mutavel

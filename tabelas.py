@@ -61,9 +61,9 @@ class Aluno_turma_disc():
 
 class Turma():
     def __init__(self):
-        self.labels =  ('ID: ', 'Estado(1 para Aberta, 0 para Fechada): ', 'Quantidade de Alunos: ',
+        self.labels =  ('ID: ', 'Estado(ABERTA ou FECHADA): ', 'Quantidade de Alunos: ',
                              'Vagas: ','Hora Inicial: ', 'Hora Final: ',
-                             'ID da Disciplina: ', 'Ano e Semestre (Formato {AAAA.S}): ', 'ID do Local: ',
+                             'ID da Disciplina: ', 'Ano e Semestre (Formato AAAA.S): ', 'ID do Local: ',
                               'Tem aula Segunda? (SIM ou NÃO)', 'Tem aula Terça? (SIM ou NÃO)','Tem aula Quarta? (SIM ou NÃO)',
                               'Tem aula Quinta? (SIM ou NÃO)','Tem aula Sexta? (SIM ou NÃO)')
         self.colunasView = (('ID', 60), ('Estado', 120), ('Quantidade de Alunos', 120),
