@@ -89,7 +89,7 @@ class App(Tk): #App eh uma subclasse de Tk
                     classe.select, nome), classe.colunas, classe.labels, classe.tipos))
             bar.add_command(label = 'Remover', 
                     command= lambda : self.selecionarRemocao("Digite o identificador da tabela "+ nome + " que deseja remover: ", framePrincipal,
-                    classe.delete))
+                    classe.delete, classe.select))
             menu.add_cascade(label=nome,
                     menu=bar)
     
@@ -121,10 +121,10 @@ class App(Tk): #App eh uma subclasse de Tk
         classe.createSearch()
         classe.pack()
     
-    def selecionarRemocao(event, label,antigo,codigo):
+    def selecionarRemocao(event, label,antigo,codigo, codigoPesq):
         for widget in antigo.winfo_children():
             widget.destroy()
-        classe = rmc.Remocao(label, antigo, codigo)
+        classe = rmc.Remocao(label, antigo, codigo, codigoPesq)
         classe.createDelete()
         classe.pack()
     
