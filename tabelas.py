@@ -128,6 +128,18 @@ class Centro():
         self.selectAll = 'SELECT * FROM centro' 
         self.select = 'SELECT * FROM centro WHERE id = '
 
+class Campus():
+    def __init__(self):
+        self.labels = ('ID: ', 'Nome do Campus: ', 'Local: ', 'ID do Reitor: ') 
+        self.colunasView = (('ID', 60), ('Nome do Campus', 160), ('Local', 140), ('ID do Reitor', 160))
+        self.colunas = ('id', 'nome', 'localidade', 'id_reitor')
+        self.tipos = ('int', 'str', 'str', 'int')
+
+        self.insert = 'INSERT INTO campus(id, nome, localidade, id_reitor) values'
+        self.delete = 'DELETE FROM campus WHERE id = '
+        self.selectAll = 'SELECT * FROM campus' 
+        self.select = 'SELECT * FROM campus WHERE id = '
+
     # def __init__(self):
         # self.labels =  
         # self.colunasView = 

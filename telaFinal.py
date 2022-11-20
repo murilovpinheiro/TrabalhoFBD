@@ -36,6 +36,7 @@ class App(Tk): #App eh uma subclasse de Tk
         notas = tabelas.Notas()
         cursos_alunos = tabelas.Cursos_Alunos()
         centro = tabelas.Centro()
+        campus = tabelas.Campus()
         classes = ((aluno, "Aluno"),
                    (prof, "Professor"),
                    (curso, "Curso"),
@@ -45,7 +46,8 @@ class App(Tk): #App eh uma subclasse de Tk
                    (endereco, "Endereco"),
                    (notas, "Notas"),
                    (cursos_alunos, "Cursos_alunos"),
-                   (centro, "Centro"))
+                   (centro, "Centro"),
+                   (campus, "Campus"))
         return classes
     
     def inicializarQuerys(self):
