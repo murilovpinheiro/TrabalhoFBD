@@ -1,0 +1,57 @@
+-- SELECTS UTILIZADOS NO PYTHON PARA VISUALIZAÇÃO
+    -- TABELA ALUNO:
+    SELECT a.*, e.rua, e.casa FROM aluno a, endereco e WHERE a.endereco = e.id; -- TODOS OS VALORES DA TABELA ALUNO ALÉM DOS VALORES DE ENDEREÇO PARA FACILITAR A VISUALIZAÇÃO
+    SELECT * FROM aluno WHERE matricula = -- algum valor de matrícula -- PESQUISA DE ALGUM ALUNO PELA MATRÍCULA
+
+    -- TABELA PROFESSOR:
+    SELECT * FROM professor -- TODOS OS VALORES DO PROFESSOR
+    SELECT * FROM professor where id = -- PESQUISA UM PROFESSOR ESPECÍFICO PELO ID(pk)
+
+    -- TABELA DISCIPLINA:
+    SELECT * FROM disciplina -- TODOS OS VALORES DA DISCIPLINA
+    SELECT * FROM disciplina where id = -- PESQUISA UMA DISCIPLINA ESPECÍFICA PELO ID(pk)
+
+    --TABELA CURSO
+    SELECT * FROM curso -- TODOS OS VALORES DO CURSO
+    SELECT * FROM curso where id = -- PESQUISA UM CURSO ESPECÍFICO PELO ID(pk)
+
+    --TABELA ALUNO_TURMA_DISC
+    SELECT * FROM aluno_turma_disc -- TODOS OS VALORES DO ALUNO_TURMA_DISC
+    SELECT * FROM aluno_turma_disc where id = -- PESQUISA UM REGISTRO ALUNO_TURMA_DISC ESPECÍFICO PELO ID(pk)
+
+    --TABELA TURMA
+    select t.*, d.dia_segunda, d.dia_terca, d.dia_quarta, d.dia_quinta, d.dia_sexta from turma t, dias_semana_turma d where t.dias_semana = d.id -- TODOS OS VALORES DA TURMA ALÉM DOS DIAS DA SEMANA PARA FACILITAR A VISUALIZAÇÃO
+    SELECT * FROM turma where id = -- PESQUISA UM REGISTRO DE TURMA ESPECÍFICA PELO ID(pk)
+
+    --TABELA ENDERECO
+    SELECT * FROM endereco -- TODOS OS VALORES DE ENDERECO
+    SELECT * FROM endereco where id = -- PESQUISA UM ENDERECO ESPECÍFICO PELO ID(pk)
+
+    --TABELA NOTAS
+    SELECT * FROM notas -- TODOS OS VALORES DE NOTAS
+    SELECT * FROM notas where id = -- PESQUISA UMA NOTA ESPECÍFICA PELO ID(pk)
+
+    --TABELA CURSOS_ALUNOS
+    SELECT * FROM cursos_alunos -- TODOS OS VALORES DE CURSOS_ALUNOS
+    SELECT * FROM cursos_alunos where id =  -- PESQUISA UM REGISTRO DE CURSOS_ALUNOS PELO ID(pk)
+
+    --TABELA CENTRO
+    SELECT * FROM centro -- TODOS OS VALORES DE CENTRO
+    SELECT * FROM centro where id = -- PESQUISA UM CENTRO PELO ID(pk)
+
+    --TABELA CAMPUS
+    SELECT * FROM campus  -- TODOS OS VALORES DE CAMPUS
+    SELECT * FROM campus where id = -- PESQUISA UM CAMPUS PELO ID(pk)
+
+    --TABELA REITOR
+    SELECT * FROM reitor -- TODOS OS VALORES DE REITOR
+    SELECT * FROM reitor where codigo = -- PESQUISA UM REITOR PELO CODIGO(pk)
+
+
+    --TABELA LOCAL
+    SELECT * FROM local -- TODOS OS VALORES DE LOCAL
+    SELECT * FROM local where codigo = -- PESQUISA UM LOCAL PELO CODIGO(pk)
+
+    --TABELA DIAS_SEMANA_TURMA
+    SELECT * FROM dias_semana_turma
+    SELECT * FROM dias_semana_turma where id = 

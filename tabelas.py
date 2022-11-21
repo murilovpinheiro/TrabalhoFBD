@@ -64,20 +64,19 @@ class Turma():
         self.labels =  ('ID: ', 'Estado(ABERTA ou FECHADA): ', 'Quantidade de Alunos: ',
                              'Vagas: ','Hora Inicial: ', 'Hora Final: ',
                              'ID da Disciplina: ', 'Ano e Semestre (Formato AAAA.S): ', 'ID do Local: ',
-                              'Tem aula Segunda? (SIM ou NÃO)', 'Tem aula Terça? (SIM ou NÃO)','Tem aula Quarta? (SIM ou NÃO)',
-                              'Tem aula Quinta? (SIM ou NÃO)','Tem aula Sexta? (SIM ou NÃO)')
+                             'ID dos Dias da Semana: ')
         self.colunasView = (('ID', 60), ('Estado', 120), ('Quantidade de Alunos', 120),
                             ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80),
-                            ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80),
+                            ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80), ('Dias da Semana', 80),
                             ('Aula Segunda', 80), ('Aula Terça', 80), ('Aula Quarta', 80), ('Aula Quinta', 80), ('Aula Sexta', 80))
         self.colunas = ('id', 'estado', 'qnt_alunos', 'vagas',
                         'horaini','horafim', 'disciplina_id', 'semestre', 'local_id',
-                        'dia_segunda','dia_terca', 'dia_quarta', 'dia_quinta', 'dia_sexta')
-        self.tipos = ('int', 'str', 'int', 'int', 'int', 'int', 'int', 'sem', 'int', 'str', 'str', 'str', 'str', 'str')
+                        'dias_semana')
+        self.tipos = ('int', 'str', 'int', 'int', 'int', 'int', 'int', 'sem', 'int', 'int')
 
-        self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id, dia_segunda,dia_terca, dia_quarta, dia_quinta, dia_sexta) values'
+        self.insert = 'insert into turma (id, estado, qnt_alunos, vagas, horaini, horafim, disciplina_id, semestre, local_id, dias_semana) values'
         self.delete = 'delete from turma where id = '
-        self.selectAll = 'select * from turma'
+        self.selectAll = 'select t.*, d.dia_segunda, d.dia_terca, d.dia_quarta, d.dia_quinta, d.dia_sexta from turma t, dias_semana_turma d where t.dias_semana = d.id'
         self.select = 'select * from turma where id = '
 
 class Endereco():
@@ -106,15 +105,15 @@ class Notas():
 
 class Cursos_Alunos():
     def __init__(self):
-        self.labels = ('Matrícula do Aluno: ', 'ID do Curso: ')
-        self.colunasView = (('Matrícula do Aluno', 160), ('ID do Curso', 160))
-        self.colunas = ('matr_aluno', 'id_curso')
-        self.tipos = ('int', 'int')
+        self.labels = ('ID:', 'Matrícula do Aluno: ', 'ID do Curso: ')
+        self.colunasView = (('ID', 80),('Matrícula do Aluno', 160), ('ID do Curso', 160))
+        self.colunas = ('id','matr_aluno', 'id_curso')
+        self.tipos = ('int', 'int','int')
 
-        self.insert = 'INSERT INTO cursos_alunos(matr_aluno, id_curso) values'
-        self.delete = 'DELETE FROM cursos_alunos WHERE matr_aluno = '
+        self.insert = 'INSERT INTO cursos_alunos(id, matr_aluno, id_curso) values'
+        self.delete = 'DELETE FROM cursos_alunos WHERE id = '
         self.selectAll = 'SELECT * FROM cursos_alunos' 
-        self.select = 'SELECT * FROM cursos_alunos WHERE matr_aluno = '
+        self.select = 'SELECT * FROM cursos_alunos WHERE id = '
 
 class Centro():
     def __init__(self):
@@ -163,3 +162,16 @@ class Local():
         self.delete = 'DELETE FROM local WHERE codigo = '
         self.selectAll = 'SELECT * FROM local' 
         self.select = 'SELECT * FROM local WHERE codigo = '
+
+class Dias_Semana_Turma():
+    def __init__(self):
+        self.labels =  ('ID: ', 'Tem aula Segunda? (SIM ou NÃO)', 'Tem aula Terça? (SIM ou NÃO)','Tem aula Quarta? (SIM ou NÃO)',
+                                'Tem aula Quinta? (SIM ou NÃO)','Tem aula Sexta? (SIM ou NÃO)')
+        self.colunasView = (('ID', 60), ('Aula Segunda', 100), ('Aula Terça', 100), ('Aula Quarta', 100), ('Aula Quinta', 100),('Aula Sexta', 100))
+        self.colunas = ('id', 'dia_segunda', 'dia_terca', 'dia_quarta', 'dia_quinta', 'dia_sexta')
+        self.tipos = ('int', 'str', 'str', 'str', 'str', 'str')
+
+        self.insert = 'INSERT INTO dias_semana_turma(id, dia_segunda, dia_terca, dia_quarta, dia_quinta, dia_sexta) values'
+        self.delete = 'DELETE FROM dias_semana_turma WHERE id = '
+        self.selectAll = 'SELECT * FROM dias_semana_turma' 
+        self.select = 'SELECT * FROM dias_semana_turma WHERE id = '

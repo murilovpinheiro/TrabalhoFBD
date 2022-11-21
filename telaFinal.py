@@ -13,7 +13,7 @@ class App(Tk): #App eh uma subclasse de Tk
         super().__init__()
         #construtor de app que chama o construtor de Tk
         self.title("Tela1")
-        self.geometry("1800x1600")
+        self.geometry("1600x1200")
 
         classes = self.inicializarClasses()
         querys = self.inicializarQuerys()
@@ -32,6 +32,7 @@ class App(Tk): #App eh uma subclasse de Tk
         curso = tabelas.Curso()
         atd = tabelas.Aluno_turma_disc()
         turma = tabelas.Turma()
+        dias_semana = tabelas.Dias_Semana_Turma()
         endereco = tabelas.Endereco()
         notas = tabelas.Notas()
         cursos_alunos = tabelas.Cursos_Alunos()
@@ -51,7 +52,8 @@ class App(Tk): #App eh uma subclasse de Tk
                    (centro, "Centro"),
                    (campus, "Campus"),
                    (reitor, "Reitor"),
-                   (local, "Local"))
+                   (local, "Local"),
+                   (dias_semana, "Dias_Semana_Turma"))
         return classes
     
     def inicializarQuerys(self):
@@ -73,14 +75,14 @@ class App(Tk): #App eh uma subclasse de Tk
         self.config(menu = menu)
         for classe in classes:
             self.createMenuBar(menu, classe[0], classe[1])
-        bar = Menu(menu)
+        bar = Menu(menu, tearoff= False)
         for query in querys:
             self.createPesquisas(bar, query)
         menu.add_cascade(label='Pesquisas', menu=bar)
 
     def createMenuBar(self, menu, classe, nome):
             #aluno = tabelas.Aluno()
-            bar = Menu(menu)
+            bar = Menu(menu, tearoff= False)
             bar.add_command(label='Visualizar',
                     command= lambda : self.selecionarVisualizar(framePrincipal,
                     classe.colunasView, classe.selectAll))

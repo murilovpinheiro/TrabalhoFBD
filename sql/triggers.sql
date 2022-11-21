@@ -205,7 +205,7 @@ DECLARE
 	coord_id integer;
 BEGIN
 	SELECT coord_curso_id FROM professor p WHERE p.id = NEW.id_coord INTO coord_id;
-	IF (coord_id IS NOT NULL) 
+	IF (coord_id IS NOT NULL and coord_id != old.id)
 	THEN RAISE EXCEPTION 'Professor ja coordena um curso';
 	END IF;
 	
