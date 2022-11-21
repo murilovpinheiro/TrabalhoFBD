@@ -16,10 +16,10 @@ class Remocao(ttk.Frame):
     def createDelete(self):
         lb = ttk.Label(self.local, text = self.labelPrincipal)
         e = ttk.Entry(self.local)
-        lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
+        lb.pack( expand = True, pady = 10, side = TOP, anchor = W)
         e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
         button = ttk.Button(self.local, text = "Deletar", command = lambda: self.deletar(e.get()))
-        button.pack(expand = True, pady = 25, anchor = CENTER)
+        button.pack(expand = True, pady = 15, anchor = CENTER)
 
 
     def deletar(self, e):

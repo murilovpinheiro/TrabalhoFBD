@@ -18,7 +18,7 @@ class Insercao(ttk.Frame):
             lb = ttk.Label(self, text = name)
             e = ttk.Entry(self)
             self.entrys[name] = e
-            lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
+            lb.pack( expand = True, pady = 10, side = TOP, anchor = W)
             e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
         button = ttk.Button(self, text = "Inserir", command = self.inserir)
         button.pack( expand = True, pady = 25, anchor = CENTER)

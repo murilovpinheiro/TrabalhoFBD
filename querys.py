@@ -3,9 +3,9 @@ class Turma_Semestre():
         self.label = "Digite o Semestre da Turma para Pesquisa: "
         self.codigo = 'select t.*, d.dia_segunda, d.dia_terca, d.dia_quarta, d.dia_quinta, d.dia_sexta from turma t, dias_semana_turma d where t.dias_semana = d.id and t.semestre ='
         self.agrupamento = ""
-        self.colunasView = (('ID', 60), ('Estado', 80), ('Quantidade de Alunos', 120),
+        self.colunasView = (('ID', 60), ('Estado', 80), ('Qntd de Alunos', 120),
                             ('Vagas', 100), ('Hora Inicial', 80), ('Hora Final', 80),
-                            ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80), ('ID do Dias da Semana: ', 120),
+                            ('ID da Disciplina', 80), ('Ano e Semestre', 120), ('ID do Local', 80), ('ID Dias da Semana: ', 120),
                             ('Aula Segunda', 80), ('Aula Terça', 80), ('Aula Quarta', 80), ('Aula Quinta', 80), ('Aula Sexta', 80))
 
 class Media_Turma():

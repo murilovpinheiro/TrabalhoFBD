@@ -22,7 +22,7 @@ class Alteracao(ttk.Frame):
     def createSearch(self):
         lb = ttk.Label(self.local, text = self.labelPrincipal)
         e = ttk.Entry(self.local)
-        lb.pack( expand = True, pady = 3, side = TOP, anchor = CENTER)
+        lb.pack( expand = True, pady = 3, side = TOP, anchor = W)
         e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
         button = ttk.Button(self.local, text = "Pesquisar", command = lambda: self.pesquisar(e))
         button.pack(expand = True, pady = 10, anchor = CENTER)
@@ -60,8 +60,8 @@ class Alteracao(ttk.Frame):
             lb = ttk.Label(self.localForm, text = label)
             e = ttk.Entry(self.localForm)
             self.entrys[label] = e
-            lb.pack( expand = True, pady = 5, side = TOP, anchor = CENTER)
-            e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
+            lb.pack( expand = True, pady = 5, side = TOP, anchor = W)
+            e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 60)
             if resultado[0][i] != None:
                 e.insert(END, resultado[0][i])
             i+=1

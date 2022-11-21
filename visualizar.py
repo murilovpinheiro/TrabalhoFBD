@@ -24,8 +24,8 @@ class Visualizar(ttk.Frame):
         scroll.pack(side = RIGHT, fill = Y)
 
         table = ttk.Treeview(self, yscrollcommand = scroll.set)
-        table.bind('<Button-1>', disableEvent)
-        table.bind('<Key>', teste)
+        # table.bind('<Button-1>', disableEvent)
+        # table.bind('<Key>', teste)
         table.pack(fill = BOTH, expand=True)
 
         scroll.configure(command=table.yview)

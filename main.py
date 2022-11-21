@@ -12,8 +12,9 @@ class App(Tk): #App eh uma subclasse de Tk
     def __init__(self):
         super().__init__()
         #construtor de app que chama o construtor de Tk
-        self.title("Tela1")
-        self.geometry("1600x1200")
+        self.title("Trabalho FBD")
+        self.geometry("1400x720")
+        self.minsize(1020, 600)
 
         classes = self.inicializarClasses()
         querys = self.inicializarQuerys()
@@ -101,8 +102,6 @@ class App(Tk): #App eh uma subclasse de Tk
     
     def createPesquisas(self, bar, query):
         bar.add_command(label = query[1], command= lambda : self.selecionarPesquisa(framePrincipal, query[0].label, query[0].codigo, query[0].colunasView, query[0].agrupamento))
-        
-
 
     def selecionarVisualizar(event, antigo, lista, comando):
         for widget in antigo.winfo_children():
@@ -147,8 +146,9 @@ class App(Tk): #App eh uma subclasse de Tk
 if __name__ == "__main__":
     app = App()
     framePrincipal = ttk.Frame(app)
-    label = Label(framePrincipal, text = "PAGINA INICIAL")
+    label = Label(framePrincipal, text = "Fundamentos de Banco de Dados", font = ("Verdana", 32), pady = 30)
+    label2 = Label(framePrincipal, text = "Trabalho Prático Implementação: \nDupla: \nMurilo Vinicius\nThomaz Ângelo", pady = 20, font = ("Helvetica", 16))
     label.pack(padx = 10, pady = 0, fill = "x", expand = True)
+    label2.pack(padx = 10, pady = 0, fill = "x", anchor = CENTER)
     framePrincipal.pack()
     app.mainloop()
-

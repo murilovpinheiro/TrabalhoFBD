@@ -23,9 +23,9 @@ class Pesquisa(ttk.Frame):
         lb = ttk.Label(self.local, text = self.labelPrincipal)
         e = ttk.Entry(self.local)
         lb.pack( expand = True, pady = 10, side = TOP, anchor = CENTER)
-        e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 50)
+        e.pack( expand = True, side = TOP, anchor = CENTER, ipadx = 60)
         button = ttk.Button(self.local, text = "Pesquisar", command = lambda: self.pesquisar(e))
-        button.pack(expand = True, pady = 25, anchor = CENTER)
+        button.pack(expand = True, pady = 15, anchor = CENTER)
 
 
     def pesquisar(self, e):
