@@ -2,10 +2,12 @@ import psycopg2 as psc
 from datetime import date
 
 def conectar():
-    conn = psc.connect(host = "200.129.44.249",
-     database = "510613",
-     user = "510613",
-     password = "510613@fbd")
+    conn = psc.connect(host = "######",
+     database = "#####",
+     user = "######",
+     password = "######")
+   # Colocar os valores respectivos do banco aqui
+    
     return conn
 
 def getQuery(com = "select * from aluno"):
