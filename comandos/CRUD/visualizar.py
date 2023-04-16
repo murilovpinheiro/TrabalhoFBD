@@ -1,6 +1,6 @@
 from tkinter import *
 from  tkinter import ttk
-import conect as cnt
+import comandos.conect as cnt
 
 class Visualizar(ttk.Frame):
     def __init__(self, columns, local, comando):

@@ -1,3 +1,7 @@
+import sys
+sys.path.append("./comandos/CRUD")
+sys.path.append("./comandos/Classes")
+
 from tkinter import *
 from  tkinter import ttk
 import visualizar as vsz
@@ -147,8 +151,6 @@ if __name__ == "__main__":
     app = App()
     framePrincipal = ttk.Frame(app)
     label = Label(framePrincipal, text = "Fundamentos de Banco de Dados", font = ("Verdana", 32), pady = 30)
-    label2 = Label(framePrincipal, text = "Trabalho Prático Implementação: \nDupla: \nMurilo Vinicius\nThomaz Ângelo", pady = 20, font = ("Helvetica", 16))
     label.pack(padx = 10, pady = 0, fill = "x", expand = True)
-    label2.pack(padx = 10, pady = 0, fill = "x", anchor = CENTER)
     framePrincipal.pack()
     app.mainloop()

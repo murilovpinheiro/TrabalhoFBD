@@ -1,7 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import conect as cnt
+import comandos.conect as cnt
 
 class Insercao(ttk.Frame):
     def __init__(self, labels, entrys, local, comando, tipos):

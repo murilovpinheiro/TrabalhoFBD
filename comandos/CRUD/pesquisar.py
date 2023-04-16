@@ -1,7 +1,7 @@
 from tkinter import *
 from  tkinter import ttk
 from tkinter.messagebox import showinfo
-import conect as cnt
+import comandos.conect as cnt
 
 class Pesquisa(ttk.Frame):
     def __init__(self, labelPrincipal ,local, localTable, comando, columns, agrupamento):
